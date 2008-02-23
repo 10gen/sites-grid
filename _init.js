@@ -8,14 +8,7 @@ core.user.auth();
    site, but keeps the site completely open otherwise.
 */
 function allowed( req , res , uri ){
-    if ( ! uri.match( /\/admin/ ) )
-        return;
-    
     user = Auth.getUser( req );
-    if ( user == null )
-        return Auth.reject( req , res );
-	
-    if ( ! user.isAdmin() )
-        return Auth.reject( req , res );
+
 }
 
