@@ -1,0 +1,49 @@
+<% jxp.pieces.header(); %>
+
+<h3>DB Edit</h3>
+
+<%
+   
+   core.content.forms();
+
+   var mydb = null;
+
+   if ( request._id ) mydb = db.dbs.findOne( ObjectId( request._id ) );
+   
+   if ( ! mydb ) mydb = {};
+
+   Forms.fillInObject( "" , mydb );
+   
+   if ( request.action == "save" ){ 
+      db.dbs.save( mydb );
+      return response.sendRedirectTemporary( "/dbs" );
+   }
+   
+   print.setFormObject( mydb );
+   
+%>
+
+<form>
+  
+  <input type="hidden" name="_id">
+  
+  <table>
+    <tr>
+      <th>Machine</th>
+      <td><input name="machine"></td>
+    </tr>
+    <tr>
+      <th>Type</th>
+      <td>
+        <%= envTypeSelect( "type" , mydb.type ) %>
+      </td>
+    </tr>
+  </table>
+
+  <input name="action" type="submit" value="save">
+
+</form>
+
+
+<% jxp.pieces.footer(); %>
+

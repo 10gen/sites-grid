@@ -9,6 +9,30 @@ core.user.auth();
 */
 function allowed( req , res , uri ){
     user = Auth.getUser( req );
-
+    
+    if ( ! req.getCookie( "__sudo" ) ){
+        response.addCookie( "__sudo" , "11" , 86400 * 365 ); 
+        response.sendTemporaryRedirect( "/" );
+        return;
+    }
+    
+    if ( ! user )
+        return Auth.reject();
+    
 }
 
+var envTypes = [ "DEV" , "STAGE" , "PROD" ];
+
+function envTypeSelect( name , curType ){
+    var h = "<select name='" + name + "'>";
+    
+    envTypes.forEach( function(z){
+        h += "<option value='" + z + "' ";
+        if ( curType == z )
+            h += " selected ";
+        h += ">" + z + "</option>";
+    } );
+
+    h += "</select>";
+    return h;
+}

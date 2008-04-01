@@ -1,0 +1,27 @@
+<% jxp.pieces.header(); %>
+
+<%
+
+db.dbs.ensureIndex( { machine : 1 } );
+
+    core.content.table();
+
+    var tab = new htmltable( 
+     {
+	 ns : db.dbs ,
+	 cols : [ 
+		 { name : "machine" } ,
+		 { name : "type" } 
+		 ] ,
+	     detailUrl : "/db_edit?_id=" ,
+	     searchable : true ,
+	     }
+     );
+tab.dbview( tab.find().sort( { machine : -1 } ) );
+
+
+%>
+
+
+<% jxp.pieces.footer(); %>
+
