@@ -24,15 +24,28 @@ function allowed( req , res , uri ){
 var envTypes = [ "DEV" , "STAGE" , "PROD" ];
 
 function envTypeSelect( name , curType ){
+    return selectBox( name , envTypes , curType );
+}
+
+function selectBox( name , choices , current ){
     var h = "<select name='" + name + "'>";
     
-    envTypes.forEach( function(z){
-        h += "<option value='" + z + "' ";
-        if ( curType == z )
+    choices.forEach( function(z){
+        var name = z;
+        var display = name;
+
+        if ( isObject( name ) ){
+            name = z.name;
+            if ( z.display )
+                display = z.display;
+        }
+        
+        h += "<option value='" + name + "' ";
+        if ( current == name )
             h += " selected ";
-        h += ">" + z + "</option>";
+        h += ">" + display + "</option>";
     } );
 
     h += "</select>";
-    return h;
+    return h;    
 }

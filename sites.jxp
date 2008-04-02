@@ -1,0 +1,30 @@
+<% jxp.pieces.header(); %>
+
+<h2>Sites</h2>
+
+<%
+
+core.content.table();
+
+var tab = new htmltable( 
+    {
+	ns : db.sites ,
+	cols : [ 
+	    { name : "name" } ,
+            { name : "created" , view : function(z){ print( z.format("yyyy-MM-dd") ); } } ,
+            { name : "instances" , view : function(z){ print( z.length ); } }
+	] ,
+	detailUrl : "/site_edit?_id=" ,
+	searchable : true ,
+    }
+);
+tab.dbview( tab.find().sort( { name : 1 } ) );
+
+%>
+
+<br>
+<a href="pool_edit"><b>New Pool</b></a><br>
+
+
+<% jxp.pieces.footer(); %>
+

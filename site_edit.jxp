@@ -1,0 +1,74 @@
+<% jxp.pieces.header(); %>
+
+<h3>Site Edit</h3>
+
+<%
+   
+core.content.forms();
+
+var mysite = null;
+
+if ( request._id ) mysite = db.sites.findOne( ObjectId( request._id ) );
+
+if ( ! mysite )
+    return response.sendRedirectTemporary( "/sites" );
+
+Forms.fillInObject( "" , mysite );
+
+if ( request.action == "save" ){ 
+    db.sites.save( mysite );
+    return response.sendRedirectTemporary( "/sites" );
+}
+
+var g = Cloud.Git.findByName( "sites/" + mysite.name );
+
+%>
+
+<table>
+  
+  <tr>
+    <th>Name</th>
+    <td><%= mysite.name %></td>
+  </tr>
+  
+  <tr>
+    <th>Created</th>
+    <td><%= mysite.created.format( "yyyy-MM-dd" ) %></td>
+  </tr>
+</table>
+
+<h4>Instances</h4>
+<table>
+  
+  <% mysite.instances.add( {} ); %>
+
+  <tr>
+    <th>branch</th>
+    <th>name</th>
+    <th>db</th>
+    <th>pool</th>
+  </tr>
+
+  <forin ins mysite.instances>
+    <% print.setFormObject( ins , "i_" ); %>
+    <form>
+      <tr>
+        <td>
+          <%= selectBox( "i_branch" , g.branches.keySet() , ins.branch || "master" ) %>
+        </td>
+        <td><input name="i_name"></td>
+        <td>
+          <%= selectBox( "i_db" , db.dbs.find().sort().toArray().map( function(z){ return { name : z.machine , display : z.machine + ":" + z.type } } ) , ins.db ) %>
+        </td>
+        <td>
+          <%= selectBox( "i_pool" , db.pools.find().sort().toArray().map( function(z){ return z.name } ) , ins.pool ) %>
+        </td>
+      </tr>
+    </form>
+  </forin>
+  
+</table>
+
+
+<% jxp.pieces.footer(); %>
+

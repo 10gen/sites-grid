@@ -1,8 +1,8 @@
 <% jxp.pieces.header(); %>
 
-<%
+<h2>DBs</h2>
 
-db.dbs.ensureIndex( { machine : 1 } );
+<%
 
     core.content.table();
 

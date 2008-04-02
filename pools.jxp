@@ -1,8 +1,8 @@
 <% jxp.pieces.header(); %>
 
-<%
+<h2>Pools</h2>
 
-db.pools.ensureIndex( { name : 1 } );
+<%
 
     core.content.table();
 
@@ -25,7 +25,6 @@ tab.dbview( tab.find().sort( { name : -1 } ) );
 
 <br>
 <a href="pool_edit"><b>New Pool</b></a><br>
-
 
 
 <% jxp.pieces.footer(); %>
