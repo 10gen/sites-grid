@@ -1,0 +1,64 @@
+<% jxp.pieces.header(); %>
+
+<h3>Pool Edit</h3>
+
+<%
+   
+   core.content.forms();
+
+   var mypool = null;
+
+   if ( request._id ) mypool = db.pools.findOne( ObjectId( request._id ) );
+   
+   if ( ! mypool ) mypool = {};
+
+   Forms.fillInObject( "" , mypool );
+
+   if ( mypool.machines && isString( mypool.machines ) ) 
+       mypool.machines = mypool.machines.split( "[ ,]+" ).filter( function(z){ 
+               z = z.trim();
+               return z.length > 0;
+           } );
+   
+   if ( request.action == "save" ){ 
+      db.pools.save( mypool );
+      return response.sendRedirectTemporary( "/pools" );
+   }
+   
+   print.setFormObject( mypool );
+   
+%>
+
+<form>
+  
+  <input type="hidden" name="_id">
+  
+  <table>
+
+    <tr>
+      <th>Name</th>
+      <td><input name="name"></td>
+    </tr>
+
+    <tr>
+      <th>Type</th>
+      <td>
+        <%= envTypeSelect( "type" , mypool.type ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Machines</th>
+      <td><input name="machines"></td>
+      <td>comma or space seperated</td>
+    </tr>
+
+  </table>
+
+  <input name="action" type="submit" value="save">
+
+</form>
+
+
+<% jxp.pieces.footer(); %>
+

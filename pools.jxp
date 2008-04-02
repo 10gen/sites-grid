@@ -1,0 +1,32 @@
+<% jxp.pieces.header(); %>
+
+<%
+
+db.pools.ensureIndex( { name : 1 } );
+
+    core.content.table();
+
+    var tab = new htmltable( 
+     {
+	 ns : db.pools ,
+	 cols : [ 
+		 { name : "name" } ,
+                 { name : "type" } ,
+                 { name : "machines" }
+		 ] ,
+	     detailUrl : "/pool_edit?_id=" ,
+	     searchable : true ,
+	     }
+     );
+tab.dbview( tab.find().sort( { name : -1 } ) );
+
+
+%>
+
+<br>
+<a href="pool_edit"><b>New Pool</b></a><br>
+
+
+
+<% jxp.pieces.footer(); %>
+

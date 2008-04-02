@@ -22,6 +22,10 @@ tab.dbview( tab.find().sort( { machine : -1 } ) );
 
 %>
 
+<br>
+<a href="db_edit"><b>New DB</b></a><br>
+
+
 
 <% jxp.pieces.footer(); %>
 
