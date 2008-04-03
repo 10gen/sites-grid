@@ -11,8 +11,8 @@ var tab = new htmltable(
 	ns : db.sites ,
 	cols : [ 
 	    { name : "name" } ,
-            { name : "created" , view : function(z){ print( z.format("yyyy-MM-dd") ); } } ,
-            { name : "instances" , view : function(z){ print( z.length ); } }
+            { name : "created" , view : function(z){ return z.format("yyyy-MM-dd"); } } ,
+            { name : "environments" , view : function(z){ return z.length; } }
 	] ,
 	detailUrl : "/site_edit?_id=" ,
 	searchable : true ,

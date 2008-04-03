@@ -12,6 +12,7 @@
       10 Gen Operator Site
 
       <ul>
+        <li><a href="/sites">Sites</a></li>
         <li><a href="/pools">Pools</a></li>
         <li><a href="/dbs">DBs</a></li>
       </ul>

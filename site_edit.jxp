@@ -8,19 +8,42 @@ core.content.forms();
 
 var mysite = null;
 
-if ( request._id ) mysite = db.sites.findOne( ObjectId( request._id ) );
+if ( request._id ) 
+    mysite = db.sites.findOne( ObjectId( request._id ) );
 
 if ( ! mysite )
     return response.sendRedirectTemporary( "/sites" );
 
-Forms.fillInObject( "" , mysite );
-
-if ( request.action == "save" ){ 
-    db.sites.save( mysite );
-    return response.sendRedirectTemporary( "/sites" );
-}
-
 var g = Cloud.Git.findByName( "sites/" + mysite.name );
+
+
+if ( request.action ){
+    
+    var ins = mysite.findEnvironmentById( request.i_iid );
+    if ( ! ins )
+        ins = mysite.findEnvironmentByName( request.i_name );
+    
+
+    if ( request.action == "delete" ){
+        if ( ins ){
+            mysite.environments = mysite.environments.filter( function(z){
+                    return z != ins;
+                } );
+        }
+    }
+    else {
+        if ( ! ins ){
+            ins = new Cloud.Environment();
+            mysite.environments.add( ins );
+        }
+        
+        Forms.fillInObject( "i_" , ins );
+        
+    }
+    
+    db.sites.save( mysite );
+
+}
 
 %>
 
@@ -37,10 +60,10 @@ var g = Cloud.Git.findByName( "sites/" + mysite.name );
   </tr>
 </table>
 
-<h4>Instances</h4>
+<h4>Environments</h4>
 <table>
   
-  <% mysite.instances.add( {} ); %>
+  <% mysite.environments.add( { _new : true } ); %>
 
   <tr>
     <th>branch</th>
@@ -49,9 +72,16 @@ var g = Cloud.Git.findByName( "sites/" + mysite.name );
     <th>pool</th>
   </tr>
 
-  <forin ins mysite.instances>
+  <forarray ins mysite.environments abc >
+    <tr ? ( ins._new ) >
+      <td colspan="5">
+        <hr>
+      </td>
+    </tr>
     <% print.setFormObject( ins , "i_" ); %>
     <form>
+      <input type="hidden" name="_id" value="<%= request._id %>" >
+      <input type="hidden" name="i_iid" >
       <tr>
         <td>
           <%= selectBox( "i_branch" , g.branches.keySet() , ins.branch || "master" ) %>
@@ -63,9 +93,17 @@ var g = Cloud.Git.findByName( "sites/" + mysite.name );
         <td>
           <%= selectBox( "i_pool" , db.pools.find().sort().toArray().map( function(z){ return z.name } ) , ins.pool ) %>
         </td>
+
+        <td>
+          <input type="submit" name="action" value="<%= ins._new ? "create" : "save" %>">
+        </td>
+        <td ? ( ! ins._new ) >
+          <input type="submit" name="action" value="delete">
+        </td>
+
       </tr>
     </form>
-  </forin>
+  </forarray>
   
 </table>
 
