@@ -21,7 +21,7 @@ function allowed( req , res , uri ){
     
 }
 
-var envTypes = [ "DEV" , "STAGE" , "PROD" ];
+var envTypes = [ "DEV" , "TEST" , "BACKUP" , "STAGE" , "PROD" ];
 
 function envTypeSelect( name , curType ){
     return selectBox( name , envTypes , curType );
