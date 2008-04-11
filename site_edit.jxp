@@ -19,31 +19,55 @@ var g = Cloud.Git.findByName( "sites/" + mysite.name );
 
 if ( request.action ){
     
-    var ins = mysite.findEnvironmentById( request.i_iid );
-    if ( ! ins )
-        ins = mysite.findEnvironmentByName( request.i_name );
+    if ( request.type == "e" ){
+
+        var ins = mysite.findEnvironmentById( request.i_iid );
+        if ( ! ins )
+            ins = mysite.findEnvironmentByName( request.i_name );
+        
+        if ( request.action == "delete" ){
+            if ( ins ){
+                mysite.environments = mysite.environments.filter( function(z){
+                        return z != ins;
+                    } );
+            }
+        }
+        else {
+            if ( ! ins ){
+                ins = new Cloud.Environment();
+                mysite.environments.add( ins );
+            }
+            
+            Forms.fillInObject( "i_" , ins );
+            
+        }
+    }
+    else if ( request.type == "d" ){
+        var mydb = mysite.findDBById( request.d_did );
+        if ( ! mydb )
+            mydb = mysite.findDBByName( request.d_name );
+        
+        if ( request.action == "delete" ){
+            if ( mysite ){
+                mysite.dbs = mysite.dbs.filter( function(z){
+                        return z != mydb;
+                    } );
+            }
+        }
+        else {
+            if ( ! mydb ){
+                mydb = new Cloud.DB();
+                mysite.dbs.add( mydb );
+            }
+            
+            Forms.fillInObject( "d_" , mydb );        
+        }
+    }
     
 
-    if ( request.action == "delete" ){
-        if ( ins ){
-            mysite.environments = mysite.environments.filter( function(z){
-                    return z != ins;
-                } );
-        }
-    }
-    else {
-        if ( ! ins ){
-            ins = new Cloud.Environment();
-            mysite.environments.add( ins );
-        }
-        
-        Forms.fillInObject( "i_" , ins );
-        
-    }
-    
     db.sites.save( mysite );
-
 }
+
 
 %>
 
@@ -60,16 +84,77 @@ if ( request.action ){
   </tr>
 </table>
 
+<h4>DBs</h4>
+<table>
+  
+  <% mysite.dbs.add( { _new : true } ); %>
+  
+  <tr>
+    <th>name</th>
+    <th>server</th>
+  </tr>
+
+  <tr>
+    <td colspan="5">
+      <hr>
+    </td>
+  </tr>
+
+  <forarray tempdb mysite.dbs tempdbidx >
+
+    <% print.setFormObject( tempdb , "d_" ); %>
+
+    <tr ? ( tempdb._new ) >
+      <td colspan="5">
+        <hr>
+      </td>
+    </tr>      
+
+    <form>
+      <input type="hidden" name="type" value="d">
+      <input type="hidden" name="_id" value="<%= request._id %>" >
+      <input type="hidden" name="d_did" >      
+      <tr>
+
+        <td><input name="d_name"></td>
+        
+        <td>
+          <%= selectBox( "d_server" , db.dbs.find().sort().toArray().map( function(z){ return { name : z.machine , display : z.machine + ":" + z.type } } ) , tempdb.server ) %>
+        </td>
+        
+        <td>
+          <input type="submit" name="action" value="<%= tempdb._new ? "create" : "save" %>">
+        </td>
+        <td ? ( ! tempdb._new ) >
+          <input type="submit" name="action" value="delete">
+        </td>
+        
+      </tr>
+    </form>
+    
+  </forarray>
+  
+  <% mysite.dbs.pop(); /* this gets rid of the _new one*/ %>
+
+</table>
+
 <h4>Environments</h4>
 <table>
   
   <% mysite.environments.add( { _new : true } ); %>
+  <% mysite.dbs.unshift( { name : "NONE" } ); %>
 
   <tr>
     <th>branch</th>
     <th>name</th>
     <th>db</th>
     <th>pool</th>
+  </tr>
+
+  <tr>
+    <td colspan="5">
+      <hr>
+    </td>
   </tr>
 
   <forarray ins mysite.environments abc >
@@ -80,6 +165,7 @@ if ( request.action ){
     </tr>
     <% print.setFormObject( ins , "i_" ); %>
     <form>
+      <input type="hidden" name="type" value="e">
       <input type="hidden" name="_id" value="<%= request._id %>" >
       <input type="hidden" name="i_iid" >
       <tr>
@@ -88,7 +174,7 @@ if ( request.action ){
         </td>
         <td><input name="i_name"></td>
         <td>
-          <%= selectBox( "i_db" , db.dbs.find().sort().toArray().map( function(z){ return { name : z.machine , display : z.machine + ":" + z.type } } ) , ins.db ) %>
+          <%= selectBox( "i_db" , mysite.dbs.map( function(z){ return z.name; } ) , ins.db ) %>
         </td>
         <td>
           <%= selectBox( "i_pool" , db.pools.find().sort().toArray().map( function(z){ return z.name } ) , ins.pool ) %>
