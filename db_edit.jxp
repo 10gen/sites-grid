@@ -29,14 +29,18 @@
   
   <table>
     <tr>
-      <th>Machine</th>
-      <td><input name="machine"></td>
+      <th>Name</th>
+      <td><input name="name"></td>
     </tr>
     <tr>
       <th>Type</th>
       <td>
         <%= envTypeSelect( "type" , mydb.type ) %>
       </td>
+    </tr>
+    <tr>
+      <th>Machine</th>
+      <td><input name="machine"></td>
     </tr>
   </table>
 

@@ -8,11 +8,15 @@ core.user.auth();
    site, but keeps the site completely open otherwise.
 */
 function allowed( req , res , uri ){
+
+    if ( uri.match( /\.(jpg|gif)$/ ) )
+        return;
+    
     user = Auth.getUser( req );
     
     if ( ! req.getCookie( "__sudo" ) ){
         response.addCookie( "__sudo" , "11" , 86400 * 365 ); 
-        response.sendTemporaryRedirect( "/" );
+        response.sendRedirectPermanent( "/" );
         return;
     }
     

@@ -10,9 +10,10 @@
      {
 	 ns : db.dbs ,
 	 cols : [ 
-		 { name : "machine" } ,
-		 { name : "type" } 
-		 ] ,
+    { name : "name" } ,
+    { name : "type" } ,
+    { name : "machine" }
+                  ] ,
 	     detailUrl : "/db_edit?_id=" ,
 	     searchable : true ,
 	     }

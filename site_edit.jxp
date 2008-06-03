@@ -84,8 +84,12 @@ if ( request.action ){
   </tr>
 </table>
 
+
+
 <h4>DBs</h4>
 <table>
+
+    <% var alldbs = db.dbs.find().sort().toArray().map( function(z){ return z.name } ); alldbs.unshift( "NONE" ); %>
   
   <% mysite.dbs.add( { _new : true } ); %>
   
@@ -116,10 +120,10 @@ if ( request.action ){
       <input type="hidden" name="d_did" >      
       <tr>
 
-        <td><input name="d_name"></td>
+        <td><input name="d_name" <%= tempdb.name ? "disabled" : "" %> ></td>
         
         <td>
-          <%= selectBox( "d_server" , db.dbs.find().sort().toArray().map( function(z){ return { name : z.machine , display : z.machine + ":" + z.type } } ) , tempdb.server ) %>
+          <%= selectBox( "d_server" , alldbs , tempdb.server ) %>
         </td>
         
         <td>
@@ -172,7 +176,7 @@ if ( request.action ){
         <td>
           <%= selectBox( "i_branch" , g.branches.keySet() , ins.branch || "master" ) %>
         </td>
-        <td><input name="i_name"></td>
+        <td><input name="i_name" <%= ins.name ? "disabled" : ""  %> ></td>
         <td>
           <%= selectBox( "i_db" , mysite.dbs.map( function(z){ return z.name; } ) , ins.db ) %>
         </td>
