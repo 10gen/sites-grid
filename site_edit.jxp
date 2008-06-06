@@ -39,7 +39,8 @@ if ( request.action ){
             }
             
             Forms.fillInObject( "i_" , ins );
-            
+            if ( ins.aliases )
+		ins.aliases = ins.aliases.split( "[, ]+" );
         }
     }
     else if ( request.type == "d" ){
@@ -68,6 +69,13 @@ if ( request.action ){
     db.sites.save( mysite );
 }
 
+mysite.environments = mysite.environments.sort( 
+    function(a,b){
+	if ( a.name  == b.name )
+	    return 0;
+	return a.name <  b.name ? -1 : 1;
+    }
+);
 
 %>
 
@@ -114,7 +122,7 @@ if ( request.action ){
       </td>
     </tr>      
 
-    <form>
+    <form method="post">
       <input type="hidden" name="type" value="d">
       <input type="hidden" name="_id" value="<%= request._id %>" >
       <input type="hidden" name="d_did" >      
@@ -153,6 +161,7 @@ if ( request.action ){
     <th>name</th>
     <th>db</th>
     <th>pool</th>
+    <th>aliases</th>
   </tr>
 
   <tr>
@@ -168,7 +177,7 @@ if ( request.action ){
       </td>
     </tr>
     <% print.setFormObject( ins , "i_" ); %>
-    <form>
+    <form method="post">
       <input type="hidden" name="type" value="e">
       <input type="hidden" name="_id" value="<%= request._id %>" >
       <input type="hidden" name="i_iid" >
@@ -184,11 +193,19 @@ if ( request.action ){
           <%= selectBox( "i_pool" , db.pools.find().sort().toArray().map( function(z){ return z.name } ) , ins.pool ) %>
         </td>
 
+	<td>
+	  <input name="i_aliases" >
+	</td>
+
+        <td ? ( ! ins._new ) >
+	   <a href="http://<%= ins.name + "." + mysite.name + ".10gen.com" %>/">View</a>
+	</td>
+
         <td>
           <input type="submit" name="action" value="<%= ins._new ? "create" : "save" %>">
         </td>
         <td ? ( ! ins._new ) >
-          <input type="submit" name="action" value="delete">
+          <input type="submit" name="action" value="delete" onClick="return window.confirm('Are you sure?')">
         </td>
 
       </tr>

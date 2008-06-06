@@ -8,8 +8,9 @@ core.user.auth();
    site, but keeps the site completely open otherwise.
 */
 function allowed( req , res , uri ){
-
-    if ( uri.match( /\.(jpg|gif)$/ ) )
+    CDN = "";
+    
+    if ( uri.match( /\.(jpg|gif|js)$/ ) )
         return;
     
     user = Auth.getUser( req );

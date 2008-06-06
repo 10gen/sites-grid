@@ -1,0 +1,24 @@
+<%
+response.setHeader( "Content-Type" ,  "text/plain" );
+var all = db.pools.find().toArray();
+print( "clusters = " );
+var names = all.map( 
+    function(z){
+	print( z.name  + " " );
+    }
+);
+print( "\n" );
+
+all.forEach( 
+    function(z){
+	print( z.name + " = " );
+	z.machines.forEach( 
+	    function(m){
+		print( "yellow@" + m + ".10gen.com " );
+	    }
+	);
+	print( "\n" );
+    }
+);
+
+%>
