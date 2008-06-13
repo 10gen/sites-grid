@@ -48,6 +48,15 @@
 
 </form>
 
+<hr>
+
+<h4>Sitess Using this</h4>
+
+<ul>
+  <forarray other ( db.sites.find( { "dbs.server" : mydb.name } ) ).toArray() >
+    <li><a href="/site_edit?_id=<%= other._id %>"><%= other.name %></a></li>
+  </forarray> 
+</ul>
 
 <% jxp.pieces.footer(); %>
 
