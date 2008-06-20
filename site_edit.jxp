@@ -16,6 +16,10 @@ if ( ! mysite )
 
 var g = Cloud.Git.findByName( "sites/" + mysite.name );
 
+if ( ! mysite.giturl ){
+    mysite.giturl = "ssh://git.10gen.com/data/gitroot/sites/" + mysite.name;
+    db.sites.save( mysite );
+}
 
 if ( request.action ){
     
@@ -64,8 +68,10 @@ if ( request.action ){
             Forms.fillInObject( "d_" , mydb );        
         }
     }
+    else if ( request.type == "g" ){
+	mysite.giturl = request.giturl;
+    }
     
-
     db.sites.save( mysite );
 }
 
@@ -90,6 +96,19 @@ mysite.environments = mysite.environments.sort(
     <th>Created</th>
     <td><%= mysite.created.format( "yyyy-MM-dd" ) %></td>
   </tr>
+
+  <tr>
+    <th>Git clone url</th>
+    <td>
+      <form method="post">
+        <input type="hidden" name="_id" value="<%= request._id %>" >
+        <input type="hidden" name="type" value="g">
+        <input name="giturl" size=60 value="<%= mysite.giturl || "" %>">
+	<input type="submit" name="action" value="save">
+      </form>
+    </td>
+  </tr>
+
 </table>
 
 
