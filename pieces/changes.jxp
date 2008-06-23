@@ -1,0 +1,14 @@
+
+<hr>
+<h3>Changes</h3>
+
+
+<table>
+  <forarray c db.changes.find( { what : arguments[0]._id } ).sort( { ts : 1 } ).toArray()>
+    <tr>
+      <th><%= c.user %></th>
+      <td><%= c.ts.format( "MM/dd/yy hh:mm" ) %></td>
+      <td><%= tojson( c.diff ) %></td>
+    </tr>
+  </forarray>
+</table>

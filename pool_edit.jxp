@@ -21,10 +21,11 @@
            } );
    
    if ( request.action == "save" ){ 
-      db.pools.save( mypool );
-      return response.sendRedirectTemporary( "/pools" );
+       (new ConfigChange( db.pools.findOne( ObjectId( request._id )) , mypool ) ).save();
+       db.pools.save( mypool );
+       return response.sendRedirectTemporary( "/pools" );
    }
-   
+
    print.setFormObject( mypool );
    
 %>
@@ -59,6 +60,8 @@
 
 </form>
 
+
+<% jxp.pieces.changes( mypool ); %>
 
 <% jxp.pieces.footer(); %>
 

@@ -72,6 +72,8 @@ if ( request.action ){
 	mysite.giturl = request.giturl;
     }
     
+    (new ConfigChange( db.sites.findOne( ObjectId( request._id )) , mysite ) ).save();
+    
     db.sites.save( mysite );
 }
 
@@ -233,6 +235,8 @@ mysite.environments = mysite.environments.sort(
   
 </table>
 
+
+<% jxp.pieces.changes( mysite ); %>
 
 <% jxp.pieces.footer(); %>
 

@@ -23,9 +23,6 @@ tab.dbview( tab.find().sort( { name : 1 } ) );
 
 %>
 
-<br>
-<a href="pool_edit"><b>New Pool</b></a><br>
-
 
 <% jxp.pieces.footer(); %>
 

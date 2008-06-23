@@ -2,6 +2,7 @@
 */
 
 core.user.auth();
+core.util.diff();
 
 /* Function allowed() is called on every request before processing for authentication purposes. 
    The default implementation below denies non-admin users access to anything under /admin/ on the 
@@ -54,3 +55,28 @@ function selectBox( name , choices , current ){
     h += "</select>";
     return h;    
 }
+
+ConfigChange = function( o , n ){
+
+    if ( ! o )
+        this.bad = true;
+
+    this.what = o._id;    
+    this.diff = Util.Diff.diff( o , n );
+
+    this.ts = new Date();
+    this.user = user.email;
+
+    assert( this.user );
+    assert( o._id == n._id );
+}
+
+ConfigChange.prototype.save = function(){
+    if ( this.bad )
+        return;
+    if ( this.diff.keySet().size() == 0 )
+        return;
+    db.changes.save( this );
+}
+
+db.changes.ensureIndex( { ts : 1 } );
