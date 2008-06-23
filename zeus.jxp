@@ -1,0 +1,29 @@
+<% jxp.pieces.header(); %>
+
+<h3>Zeus Updater</h3>
+<%
+
+if ( request.action == "update zeus" && request.sure == "yes" && request.pass ){
+    var z = Cloud.createZeus( "iad-sb-n3.10gen.com" , "admin" , request.pass );
+    z.updateResolveRule();
+    print( "updated!!" );
+}
+else if ( request.action == "update zeus" ){
+%>
+<form method="post" action="/zeus">
+  <input type="hidden" value="update zeus" name="action">
+  Password: <input type="password" name="pass" value=""><br>
+  Are you sure (no backsies):<input type="submit" value="yes" name="sure">
+</form>
+<%
+}
+else {
+%>
+<form method="post" action="/zeus">
+  <input type="submit" value="update zeus" name="action">
+</form>
+<%
+}
+
+ jxp.pieces.footer(); %>
+
