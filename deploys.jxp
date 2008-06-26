@@ -1,0 +1,15 @@
+<% jxp.pieces.header(); %>
+
+<table>
+    <forarray dep db.deploys.find().sort( { when : -1 } ).limit( 500 ).toArray() >
+      <tr>
+         <th><%= dep.module %></th>
+         <td><%= dep.environment %></td>
+         <td><%= dep.version %></td>
+         <td><%= dep.when.strftime( "%D %T" ) %></td>
+      </tr>
+    </forarray>
+</table>
+
+<% jxp.pieces.footer(); %>
+
