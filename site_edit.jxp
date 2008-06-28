@@ -11,8 +11,14 @@ var mysite = null;
 if ( request._id ) 
     mysite = db.sites.findOne( ObjectId( request._id ) );
 
-if ( ! mysite )
-    return response.sendRedirectTemporary( "/sites" );
+if ( ! mysite ){
+    if ( ! request.newName )
+	return response.sendRedirectTemporary( "/sites" );
+
+    mysite = { name : request.newName };
+    db.sites.save( mysite );
+    return response.sendRedirectTemporary( "/site_edit?_id=" + mysite._id );
+}
 
 var g = Cloud.Git.findByName( "sites/" + mysite.name );
 
