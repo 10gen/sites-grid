@@ -49,7 +49,7 @@ if ( request.action ){
             }
             
             Forms.fillInObject( "i_" , ins );
-            if ( ins.aliases )
+            if ( ins.aliases && isString( ins.aliases ) )
 		ins.aliases = ins.aliases.split( "[, ]+" );
         }
     }
