@@ -1,0 +1,24 @@
+<% jxp.pieces.header(); %>
+
+<h2>Modules</h2>
+
+<%
+
+core.content.table();
+
+var tab = new htmltable( 
+    {
+	ns : db.git ,
+	cols : [ 
+	    { name : "name" } ,
+	] ,
+	detailUrl : "/module?_id=" ,
+	searchable : true ,
+    }
+);
+tab.dbview( tab.find( { name : /\-modules\// } ).sort( { name : 1 } ) );
+
+%>
+
+<% jxp.pieces.footer(); %>
+

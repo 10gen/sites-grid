@@ -1,0 +1,84 @@
+<% jxp.pieces.header(); %>
+
+<%
+
+    var mygit = db.git.findOne( ObjectId( request._id ) );
+if ( ! mygit )
+    return response.sendRedirectTemporary( "/modules" );
+
+if ( request.name ){
+    if ( ! mygit.symlinks )
+        mygit.symlinks = {};
+    
+    if ( request.action == "update" || 
+         request.action == "new" )
+        mygit.symlinks[ request.name ] = request.branch;
+    else if ( request.action == "delete" )
+        delete mygit.symlinks[ request.name ];
+    
+    (new ConfigChange( db.git.findOne( ObjectId( request._id )) , mygit ) ).save();
+
+    db.git.save( mygit );
+}
+
+%>
+
+<h2><%= mygit.name %></h2>
+
+<%
+    var branches = mygit.branches.keySet();
+
+function whatList( cur ){
+    var html = "<select name='branch'>";
+
+    for ( var i=0; i<branches.length; i++ ){
+        html += "<option value='" + branches[i] + "' ";
+        if ( cur == branches[i] )
+            html += " selected ";
+        html += ">" + branches[i] + "</option>";
+    }
+    
+    html += "</select>";
+    return html;
+}
+
+%>
+
+<h3>Sym Links</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>What</th>
+  </tr>
+  </tr>
+  <forin sym mygit.symlinks >
+    <tr>
+      <form method="post" action="/module">
+        <input type="hidden" name="_id" value="<%= request._id %>">
+        <input type="hidden" name="name" value="<%= sym %>">
+        <td><%= sym %></td>
+        <td><%= whatList( mygit.symlinks[ sym ] ) %></td>
+        <td>
+          <input type="submit" name="action" value="update">  
+          <input type="submit" name="action" value="delete">  
+        </td>
+      </form>
+    </tr>
+  </forin>
+  <tr>
+    <form method="post" action="/module">
+      <input type="hidden" name="_id" value="<%= request._id %>">
+      <td><input name="name"></td>
+      <td><%= whatList() %></td>
+      <td>
+        <input type="submit" name="action" value="new">
+      </td>
+    </form>
+  </tr>
+</table>
+
+<% jxp.pieces.changes( mygit ); %>
+
+
+<% jxp.pieces.footer(); %>
+
