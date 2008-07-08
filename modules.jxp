@@ -16,7 +16,7 @@ var tab = new htmltable(
 	searchable : true ,
     }
 );
-tab.dbview( tab.find( { name : /\-modules\// } ).sort( { name : 1 } ) );
+tab.dbview( tab.find( { name : /(\-modules\/|^corejs$)/ } ).sort( { name : 1 } ) );
 
 %>
 
