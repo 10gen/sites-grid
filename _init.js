@@ -9,6 +9,10 @@ core.util.diff();
    site, but keeps the site completely open otherwise.
 */
 function allowed( req , res , uri ){
+    if ( req.getHeader( "X-SSL" ) != "js81" ){
+	response.sendRedirectPermanent( "https://" + req.getHost() + uri );
+	return;
+    }
     CDN = "";
     
     if ( uri.match( /\.(jpg|gif|js)$/ ) )
@@ -80,3 +84,45 @@ ConfigChange.prototype.save = function(){
 }
 
 db.changes.ensureIndex( { ts : 1 } );
+
+resetSiteOnPool = function( pool , hostName ){
+    var res = { ok : true };
+
+    var p = db.pools.findOne( { name : pool } );
+    if ( ! p ){
+	res.ok = false;
+	res.msg = "couldn't find pool : " + pool;
+	return res;
+    }
+    
+    var threads = [];
+
+    p.machines.forEach( 
+	function(z){
+	    threads.push(
+		fork( 
+		    function(){
+			try {
+			    res[z] = resetSiteOnHost( z , hostName );
+			}
+			catch ( e ){
+			    res.ok = false;
+			    res[z] = e;
+			}
+		    }
+		)
+	    )
+	}
+    );
+
+    threads.forEach( function(z){ z.start(); } );
+    threads.forEach( function(z){ z.join(); } );
+
+    return res;
+}
+
+resetSiteOnHost = function( machine , hostName ){
+    var cmd = "ssh " + machine + " \"curl -D - -s -H 'Host: " + hostName + "'\" local.10gen.com:8080/~reset ";
+    var res = sysexec( cmd );
+    return res;
+}

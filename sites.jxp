@@ -24,5 +24,13 @@ tab.dbview( tab.find().sort( { name : 1 } ) );
 %>
 
 
+<hr>
+
+<h3>New Site</h3>
+<form method="post" action="/site_edit">
+  Name: <input name="newName">
+  <input name="action" type="submit" value="Add">
+</form>
+
 <% jxp.pieces.footer(); %>
 

@@ -15,12 +15,20 @@ if ( ! mysite ){
     if ( ! request.newName )
 	return response.sendRedirectTemporary( "/sites" );
 
+    if ( db.sites.findOne( { name : request.newName } ) )
+	throw "a site already exists with name [" + request.newName + "]";
+
     mysite = { name : request.newName };
     db.sites.save( mysite );
     return response.sendRedirectTemporary( "/site_edit?_id=" + mysite._id );
 }
 
 var g = Cloud.Git.findByName( "sites/" + mysite.name );
+if ( ! g ){
+    g = new Cloud.Git.Repository();
+    g.ensureHash( "master" , "0" );
+}
+
 
 if ( ! mysite.giturl ){
     mysite.giturl = "ssh://git.10gen.com/data/gitroot/sites/" + mysite.name;

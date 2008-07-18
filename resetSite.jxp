@@ -1,0 +1,29 @@
+<% jxp.pieces.header(); %>
+
+<br>
+
+<if ( request.action == "Reset" && request.host )>
+
+<div style='color:blue'>Resetting <b><%= request.host %></b> on <b><%= request.pool %></b></div>
+<% var res = resetSiteOnPool( request.pool , request.host ); %>
+
+<%= tojson( res ) %>
+<if ( ! res.ok ) >
+<h1 style='color:red' >ERROR</h1>
+</if>
+
+<h3 style='color:purple'><%= res.msg %></h3>
+
+<hr>
+
+</if>
+
+<h3>Reset a Site</h3>
+<form method="POST">
+   Host: <input name="host"><br>
+   Cluster <%= selectBox( "pool" , db.pools.find().sort().toArray().map( function(z){ return z.name } ) ) %><br>
+   <input type="submit" name="action" value="Reset">
+</form>
+
+<% jxp.pieces.footer(); %>
+
