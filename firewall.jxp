@@ -1,0 +1,52 @@
+<% 
+if ( request.action == "rules" ){
+    response.setHeader(  "Content-Type" , "text/plain" );
+    print( "iptables -F\n" );
+    db.firewall.find().forEach(
+	function(z){
+	    print( "iptables -m comment --comment \"allow " + z.host + " to db | " + ( z.comment || "" ) + "\" -I INPUT -s " + javaStatic( "java.net.InetAddress" , "getByName" , z.host ).getHostAddress() + " -p tcp --dport 27017 -j ACCEPT\n" );
+	}
+    );
+    print( "iptables -m comment --comment \"none shall pass to db\" -A INPUT -s 0.0.0.0/0 -p tcp --dport 27017 -j REJECT" );
+    
+    return;
+}
+%>
+
+<% jxp.pieces.header(); %>
+
+<%
+if ( request.action == "add" && request.host ){
+    db.firewall.save( { host : request.host , comment : request.comment } );
+}
+%>
+
+<table border="1">
+
+  <tr>
+     <th>Host</th>
+     <th>Comment</th>
+  </tr>
+
+  <forarray h db.firewall.find().toArray() >
+  <tr>
+     <td><%= h.host %></td>
+     <td><%= h.comment || "&nbsp;" %></td>
+     <td><A href="/firewall?delete=<%= h._id %>">delete</a></td>
+  <tr>
+  </forarray>
+
+  <tr>
+     <form action="/firewall" method="POST">
+     <td><input name="host"></td>
+     <td><input name="comment"></td>
+     <td><input type="submit" name="action" value="add"></td>
+   </tr>
+  </tr>
+
+</table>
+
+<a href="/firewall?action=rules">rules</a>
+
+<% jxp.pieces.footer(); %>
+
