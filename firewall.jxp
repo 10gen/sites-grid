@@ -1,14 +1,24 @@
 <% 
 if ( request.action == "rules" ){
     response.setHeader(  "Content-Type" , "text/plain" );
-    print( "iptables -F\n" );
+    print( "sudo /sbin/iptables -F\n" );
     db.firewall.find().forEach(
 	function(z){
-	    print( "iptables -m comment --comment \"allow " + z.host + " to db | " + ( z.comment || "" ) + "\" -I INPUT -s " + javaStatic( "java.net.InetAddress" , "getByName" , z.host ).getHostAddress() + " -p tcp --dport 27017 -j ACCEPT\n" );
+	    print( "sudo /sbin/iptables -m comment --comment \"allow " + z.host + " to db | " + ( z.comment || "" ) + "\" -I INPUT -s " + javaStatic( "java.net.InetAddress" , "getByName" , z.host ).getHostAddress() + " -p tcp --dport 27017 -j ACCEPT\n" );
 	}
     );
-    print( "iptables -m comment --comment \"none shall pass to db\" -A INPUT -s 0.0.0.0/0 -p tcp --dport 27017 -j REJECT" );
+    print( "sudo /sbin/iptables -m comment --comment \"none shall pass to db\" -A INPUT -s 0.0.0.0/0 -p tcp --dport 27017 -j REJECT" );
     
+    return;
+}
+
+if ( request.action == "where" ){
+    response.setHeader(  "Content-Type" , "text/plain" );
+    db.dbs.find().forEach(
+	function(z){
+	    print( z.machine + "\n" );
+	}
+    );
     return;
 }
 %>
