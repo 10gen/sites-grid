@@ -85,7 +85,9 @@ ConfigChange.prototype.save = function(){
 
 db.changes.ensureIndex( { ts : 1 } );
 
-resetSiteOnPool = function( pool , hostName ){
+resetSiteOnPool = function( pool , hostName , command ){
+    command = command || "reset";
+
     var res = { ok : true };
 
     var p = db.pools.findOne( { name : pool } );
@@ -103,7 +105,7 @@ resetSiteOnPool = function( pool , hostName ){
 		fork( 
 		    function(){
 			try {
-			    res[z] = resetSiteOnHost( z , hostName );
+			    res[z] = resetSiteOnHost( z , hostName , command );
 			}
 			catch ( e ){
 			    res.ok = false;
@@ -121,8 +123,9 @@ resetSiteOnPool = function( pool , hostName ){
     return res;
 }
 
-resetSiteOnHost = function( machine , hostName ){
-    var cmd = "ssh " + machine + " \"curl -D - -s -H 'Host: " + hostName + "'\" local.10gen.com:8080/~reset ";
+resetSiteOnHost = function( machine , hostName , command ){
+    command = command || "reset";
+    var cmd = "ssh " + machine + " \"curl -D - -s -H 'Host: " + hostName + "'\" local.10gen.com:8080/~" + command;
     var res = sysexec( cmd );
     return res;
 }
