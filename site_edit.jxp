@@ -23,12 +23,7 @@ if ( ! mysite ){
     return response.sendRedirectTemporary( "/site_edit?_id=" + mysite._id );
 }
 
-var g = Cloud.Git.findByName( "sites/" + mysite.name );
-if ( ! g ){
-    g = new Cloud.Git.Repository();
-    g.ensureHash( "master" , "0" );
-}
-
+var branches = mysite.getGitBranchNames( request.gitUpdate );
 
 if ( ! mysite.giturl ){
     mysite.giturl = "ssh://git.10gen.com/data/gitroot/sites/" + mysite.name;
@@ -127,8 +122,6 @@ mysite.environments = mysite.environments.sort(
 
 </table>
 
-
-
 <h4>DBs</h4>
 <table>
 
@@ -218,7 +211,8 @@ mysite.environments = mysite.environments.sort(
       <input type="hidden" name="i_iid" >
       <tr>
         <td>
-          <%= selectBox( "i_branch" , g.branches.keySet() , ins.branch || "master" ) %>
+
+          <%= selectBox( "i_branch" , branches , ins.branch || "master" ) %>
         </td>
         <td><input name="i_name" <%= ins.name ? "disabled" : ""  %> ></td>
         <td>
@@ -257,6 +251,17 @@ mysite.environments = mysite.environments.sort(
 
 
 <% jxp.pieces.changes( mysite ); %>
+
+<hr>
+<h4>Git Branches or tag</h4>
+<ul>
+   <forarray br branches>
+   <li><%= br %></li>
+   </forarray>
+</ul>
+<br>
+<a href="/site_edit?_id=<%= mysite._id %>&gitUpdate=true">update remote branches/tags</a>
+
 
 <% jxp.pieces.footer(); %>
 
