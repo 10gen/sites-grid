@@ -9,7 +9,7 @@ core.util.diff();
    site, but keeps the site completely open otherwise.
 */
 function allowed( req , res , uri ){
-    if ( req.getHeader( "X-SSL" ) != "js81" ){
+    if ( req.getHeader( "X-SSL" ) != "js81" && req.getHost() == "admin.10gen.com" ){
 	response.sendRedirectPermanent( "https://" + req.getHost() + uri );
 	return;
     }
