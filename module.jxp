@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <%
 
@@ -77,8 +77,8 @@ function whatList( cur ){
   </tr>
 </table>
 
-<% jxp.pieces.changes( mygit ); %>
+<% local.pieces.changes( mygit ); %>
 
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

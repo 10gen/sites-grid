@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 a
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

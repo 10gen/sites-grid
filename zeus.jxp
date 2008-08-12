@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <h3>Zeus Updater</h3>
 <%
@@ -25,5 +25,5 @@ else {
 <%
 }
 
- jxp.pieces.footer(); %>
+ local.pieces.footer(); %>
 

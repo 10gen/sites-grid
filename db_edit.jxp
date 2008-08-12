@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <h3>DB Edit</h3>
 
@@ -58,5 +58,5 @@
   </forarray> 
 </ul>
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

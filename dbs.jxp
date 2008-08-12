@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <h2>DBs</h2>
 
@@ -28,5 +28,5 @@ tab.dbview( tab.find().sort( { machine : -1 } ) );
 
 
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

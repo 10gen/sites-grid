@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <h2>Modules</h2>
 
@@ -20,5 +20,5 @@ tab.dbview( tab.find( { name : /(\-modules\/|^corejs$)/ } ).sort( { name : 1 } )
 
 %>
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

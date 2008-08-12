@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <h2>Sites</h2>
 
@@ -32,5 +32,5 @@ tab.dbview( tab.find().sort( { name : 1 } ) );
   <input name="action" type="submit" value="Add">
 </form>
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

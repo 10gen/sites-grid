@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <h3>Site Edit</h3>
 
@@ -259,7 +259,7 @@ mysite.environments = mysite.environments.sort(
 </table>
 
 
-<% jxp.pieces.changes( mysite ); %>
+<% local.pieces.changes( mysite ); %>
 
 <hr>
 <h4>Git Branches or tag</h4>
@@ -272,5 +272,5 @@ mysite.environments = mysite.environments.sort(
 <a href="/site_edit?_id=<%= mysite._id %>&gitUpdate=true">update remote branches/tags</a>
 
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <h3>Pool Edit</h3>
 
@@ -61,7 +61,7 @@
 </form>
 
 
-<% jxp.pieces.changes( mypool ); %>
+<% local.pieces.changes( mypool ); %>
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

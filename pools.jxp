@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <h2>Pools</h2>
 
@@ -27,5 +27,5 @@ tab.dbview( tab.find().sort( { name : -1 } ) );
 <a href="pool_edit"><b>New Pool</b></a><br>
 
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

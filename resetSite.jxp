@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <br>
 
@@ -26,5 +26,5 @@
    <input type="submit" name="action" value="Update">
 </form>
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

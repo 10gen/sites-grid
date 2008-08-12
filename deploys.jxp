@@ -1,4 +1,4 @@
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <table>
     <forarray dep db.deploys.find().sort( { when : -1 } ).limit( 500 ).toArray() >
@@ -11,5 +11,5 @@
     </forarray>
 </table>
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 

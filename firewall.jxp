@@ -23,7 +23,7 @@ if ( request.action == "where" ){
 }
 %>
 
-<% jxp.pieces.header(); %>
+<% local.pieces.header(); %>
 
 <%
 if ( request.action == "add" && request.host ){
@@ -58,5 +58,5 @@ if ( request.action == "add" && request.host ){
 
 <a href="/firewall?action=rules">rules</a>
 
-<% jxp.pieces.footer(); %>
+<% local.pieces.footer(); %>
 
