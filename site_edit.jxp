@@ -11,6 +11,15 @@ var mysite = null;
 if ( request._id ) 
     mysite = db.sites.findOne( ObjectId( request._id ) );
 
+if ( ! mysite && request.getURI().startsWith( "/site_edit/" ) ){
+    var temp = request.getURI().substring( 11 ).trim();
+    if ( temp ){
+        mysite = db.sites.findOne( { name : temp } );
+        if ( mysite )
+            request._id = mysite._id;
+    }
+}
+
 if ( ! mysite ){
     if ( ! request.newName )
 	return response.sendRedirectTemporary( "/sites" );

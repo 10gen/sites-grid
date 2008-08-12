@@ -15,7 +15,7 @@ var tab = new htmltable(
             { name : "environments" , view : function(z){ return z.length; } },
             { name : "dbs" , view : function(z){ return z.length; } } 
 	] ,
-	detailUrl : "/site_edit?_id=" ,
+        detail : function(z){ return "/site_edit/" + z.name; } ,
 	searchable : true ,
     }
 );
