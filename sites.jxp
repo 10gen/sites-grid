@@ -28,7 +28,8 @@ tab.dbview( tab.find().sort( { name : 1 } ) );
 
 <h3>New Site</h3>
 <form method="post" action="/site_edit">
-  Name: <input name="newName">
+  Name: <input name="newName"><br>
+  Git Url: <input name="giturl"><br>
   <input name="action" type="submit" value="Add">
 </form>
 
