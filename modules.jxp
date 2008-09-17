@@ -11,12 +11,13 @@ var tab = new htmltable(
 	ns : db.git ,
 	cols : [ 
 	    { name : "name" } ,
+	    { name : "released" }
 	] ,
 	detailUrl : "/module?_id=" ,
 	searchable : true ,
     }
 );
-tab.dbview( tab.find( { name : /(\-modules\/|^corejs$)/ } ).sort( { name : 1 } ) );
+tab.dbview( tab.find( { name : /(\-modules\/|^corejs$|^external$)/ } ).sort( { name : 1 } ) );
 
 %>
 

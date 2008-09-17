@@ -14,11 +14,12 @@
 
    Forms.fillInObject( "" , mypool );
 
-   if ( mypool.machines && isString( mypool.machines ) ) 
-       mypool.machines = mypool.machines.split( "[ ,]+" ).filter( function(z){ 
+   if ( mypool.machines && isString( mypool.machines ) ){
+       mypool.machines = mypool.machines.split( /[ ,]+/ ).filter( function(z){ 
                z = z.trim();
                return z.length > 0;
            } );
+   }
    
    if ( request.action == "save" ){ 
        (new ConfigChange( db.pools.findOne( ObjectId( request._id )) , mypool ) ).save();
@@ -50,8 +51,9 @@
 
     <tr>
       <th>Machines</th>
-      <td><input name="machines"></td>
+      <td><input name="machines">(<%= mypool.machines.length %>)</td>
       <td>comma or space seperated</td>
+      
     </tr>
 
   </table>

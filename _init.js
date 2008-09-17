@@ -9,6 +9,10 @@ core.util.diff();
    site, but keeps the site completely open otherwise.
 */
 function allowed( req , res , uri ){
+    
+    if ( uri.startsWith( "/api" ) )
+	return;
+
     if ( req.getHeader( "X-SSL" ) != "js81" && req.getHost() == "grid.10gen.com" ){
 	response.sendRedirectPermanent( "https://" + req.getHost() + uri );
 	return;

@@ -21,6 +21,12 @@ if ( request.name ){
     db.git.save( mygit );
 }
 
+if ( request.action == "toggleReleased" ){
+    mygit.released = ! mygit.released;
+    db.git.save( mygit );
+}
+    
+
 %>
 
 <h2><%= mygit.name %></h2>
@@ -76,6 +82,16 @@ function whatList( cur ){
     </form>
   </tr>
 </table>
+
+<hr>
+
+<b>Released</b> : <%= ! ! mygit.released %> 
+<form method="post"> 
+  <input type="hidden" name="_id" value="<%= mygit._id %>">
+  <input type="submit" name="action" value="toggleReleased" >
+</form>
+<br>
+
 
 <% local.pieces.changes( mygit ); %>
 
