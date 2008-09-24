@@ -1,8 +1,10 @@
 <% 
+
+db.firewall.ensureIndex( { host :- 1 } );
 if ( request.action == "rules" ){
     response.setHeader(  "Content-Type" , "text/plain" );
     print( "sudo /sbin/iptables -F\n" );
-    db.firewall.find().forEach(
+    db.firewall.find().sort( { host : 1 } ).forEach(
 	function(z){
 	    print( "sudo /sbin/iptables -m comment --comment \"allow " + z.host + " to db | " + ( z.comment || "" ) + "\" -I INPUT -s " + javaStatic( "java.net.InetAddress" , "getByName" , z.host ).getHostAddress() + " -p tcp --dport 27017 -j ACCEPT\n" );
 	}

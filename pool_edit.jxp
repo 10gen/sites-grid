@@ -22,7 +22,8 @@
    }
    
    if ( request.action == "save" ){ 
-       (new ConfigChange( db.pools.findOne( ObjectId( request._id )) , mypool ) ).save();
+       if ( request._id ) 
+	   (new ConfigChange( db.pools.findOne( ObjectId( request._id )) , mypool ) ).save();
        db.pools.save( mypool );
        return response.sendRedirectTemporary( "/pools" );
    }
@@ -51,7 +52,7 @@
 
     <tr>
       <th>Machines</th>
-      <td><input name="machines">(<%= mypool.machines.length %>)</td>
+      <td><input name="machines">(<%= mypool && mypool.machines ? mypool.machines.length : 0 %>)</td>
       <td>comma or space seperated</td>
       
     </tr>

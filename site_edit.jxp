@@ -263,8 +263,6 @@ mysite.environments = mysite.environments.sort(
 </table>
 
 
-<% local.pieces.changes( mysite ); %>
-
 <hr>
 <h4>Git Branches or tag</h4>
 <ul>
@@ -274,6 +272,17 @@ mysite.environments = mysite.environments.sort(
 </ul>
 <br>
 <a href="/site_edit?_id=<%= mysite._id %>&gitUpdate=true">update remote branches/tags</a>
+
+<div ? ( mysite.defaultUsers )>
+<hr>
+<h4>Default Users</h4>
+  <forarray uu mysite.defaultUsers >
+  <%= tojson( uu ) %>
+  </forarray>	       
+</div>
+
+<% local.pieces.changes( mysite ); %>
+
 
 
 <% local.pieces.footer(); %>

@@ -5,7 +5,7 @@
 <%
 
     core.content.table();
-
+db.pools.ensureIndex( { name : 1 } );
     var tab = new htmltable( 
      {
 	 ns : db.pools ,
