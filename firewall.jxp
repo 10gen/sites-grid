@@ -3,7 +3,7 @@
 db.firewall.ensureIndex( { host :- 1 } );
 if ( request.action == "rules" ){
     response.setHeader(  "Content-Type" , "text/plain" );
-    print( "sudo /sbin/iptables -F\n" );
+    print( "sudo /sbin/iptables -F\n" );    
     db.firewall.find().sort( { host : 1 } ).forEach(
 	function(z){
 	    print( "sudo /sbin/iptables -m comment --comment \"allow " + z.host + " to db | " + ( z.comment || "" ) + "\" -I INPUT -s " + javaStatic( "java.net.InetAddress" , "getByName" , z.host ).getHostAddress() + " -p tcp --dport 27017 -j ACCEPT\n" );
@@ -31,6 +31,11 @@ if ( request.action == "where" ){
 if ( request.action == "add" && request.host ){
     db.firewall.save( { host : request.host , comment : request.comment } );
 }
+
+if ( request.action == "delete" && request.id ){
+    db.firewall.remove( { _id : request.id } );
+}
+
 %>
 
 <table border="1">
@@ -40,11 +45,11 @@ if ( request.action == "add" && request.host ){
      <th>Comment</th>
   </tr>
 
-  <forarray h db.firewall.find().toArray() >
+  <forarray h db.firewall.find().sort( { host : -1 } ).toArray() >
   <tr>
      <td><%= h.host %></td>
      <td><%= h.comment || "&nbsp;" %></td>
-     <td><A href="/firewall?delete=<%= h._id %>">delete</a></td>
+     <td><A href="/firewall?action=delete&id=<%= h._id %>">delete</a></td>
   <tr>
   </forarray>
 
