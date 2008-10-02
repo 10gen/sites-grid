@@ -1,6 +1,7 @@
 <% 
 
 db.firewall.ensureIndex( { host :- 1 } );
+
 if ( request.action == "rules" ){
     response.setHeader(  "Content-Type" , "text/plain" );
     print( "sudo /sbin/iptables -F\n" );    
@@ -10,6 +11,17 @@ if ( request.action == "rules" ){
 	}
     );
     print( "sudo /sbin/iptables -m comment --comment \"none shall pass to db\" -A INPUT -s 0.0.0.0/0 -p tcp --dport 27017 -j REJECT" );
+    
+    return;
+}
+
+if ( request.action == "router-rules" ){
+    response.setHeader(  "Content-Type" , "text/plain" );
+    db.firewall.find().sort( { host : 1 } ).forEach(
+	function(z){
+	    print( "permit tcp " + javaStatic( "java.net.InetAddress" , "getByName" , z.host ).getHostAddress() + " any eq 27017 \n" );
+	}
+    );
     
     return;
 }
@@ -63,7 +75,8 @@ if ( request.action == "delete" && request.id ){
 
 </table>
 
-<a href="/firewall?action=rules">rules</a>
+<a href="/firewall?action=rules">rules</a> |
+<a href="/firewall?action=router-rules">router rules</a>
 
 <% local.pieces.footer(); %>
 
