@@ -4,6 +4,7 @@
 
 <%
 
+db.dbs.ensureIndex( { name : 1 } );
     core.content.table();
 
     var tab = new htmltable( 
@@ -18,7 +19,7 @@
 	     searchable : true ,
 	     }
      );
-tab.dbview( tab.find().sort( { machine : -1 } ) );
+tab.dbview( tab.find().sort( { name : -1 } ) );
 
 
 %>
