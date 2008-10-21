@@ -67,6 +67,9 @@ if ( request.action ){
             Forms.fillInObject( "i_" , ins );
             if ( ins.aliases && isString( ins.aliases ) )
 		ins.aliases = ins.aliases.split( "[, ]+" );
+
+	    if ( ! ins.name )
+		throw "need a name";
         }
     }
     else if ( request.type == "d" ){
@@ -140,11 +143,12 @@ mysite.environments = mysite.environments.sort(
 
     <% var alldbs = db.dbs.find().sort().toArray().map( function(z){ return z.name } ); alldbs.unshift( "NONE" ); %>
   
-  <% mysite.dbs.add( { _new : true } ); %>
+    <% mysite.dbs.add( { _new : true , envPartition : true } ); %>
   
   <tr>
     <th>name</th>
     <th>server</th>
+    <th>env partition</th>
   </tr>
 
   <tr>
@@ -174,10 +178,15 @@ mysite.environments = mysite.environments.sort(
         <td>
           <%= selectBox( "d_server" , alldbs , tempdb.server ) %>
         </td>
-        
+
+	<td>
+	  <input name="envPartition" type="checkbox" <%= tempdb.envPartition ? "checked" : "" %>>	   
+	</td>
+	
         <td>
           <input type="submit" name="action" value="<%= tempdb._new ? "create" : "save" %>">
         </td>
+
         <td ? ( ! tempdb._new ) >
           <input type="submit" name="action" value="delete">
         </td>
@@ -222,6 +231,7 @@ mysite.environments = mysite.environments.sort(
       <input type="hidden" name="type" value="e">
       <input type="hidden" name="_id" value="<%= request._id %>" >
       <input type="hidden" name="i_iid" >
+      <input type="hidden" name="i_name" ></td>
       <tr>
         <td>
 
