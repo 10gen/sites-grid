@@ -167,7 +167,7 @@ mysite.environments = mysite.environments.sort(
       </td>
     </tr>      
 
-    <form method="post">
+    <form method="get">
       <input type="hidden" name="type" value="d">
       <input type="hidden" name="_id" value="<%= request._id %>" >
       <input type="hidden" name="d_did" >      
@@ -180,7 +180,7 @@ mysite.environments = mysite.environments.sort(
         </td>
 
 	<td>
-	  <input name="envPartition" type="checkbox" <%= tempdb.envPartition ? "checked" : "" %>>	   
+	  <input name="d_envPartition" type="checkbox" <%= tempdb.envPartition ? "checked" : "" %>>	   
 	</td>
 	
         <td>
