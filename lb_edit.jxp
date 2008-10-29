@@ -1,0 +1,44 @@
+<% local.pieces.header(); %>
+
+<h3>Load Balancer Edit</h3>
+
+<%
+   
+   core.content.forms();
+
+   var mylb = null;
+
+   if ( request._id ) mylb = db.lbs.findOne( ObjectId( request._id ) );
+   
+   if ( ! mylb ) mylb = {};
+
+   Forms.fillInObject( "" , mylb );
+   
+   if ( request.action == "save" ){ 
+      db.lbs.save( mylb );
+      return response.sendRedirectTemporary( "/lbs" );
+   }  
+   
+   print.setFormObject( mylb );
+   
+%>
+
+<form>
+  
+  <input type="hidden" name="_id">
+  
+  <table>
+    <tr>
+      <th>Machine</th>
+      <td><input name="machine"></td>
+    </tr>
+  </table>
+
+  <input name="action" type="submit" value="save">
+
+</form>
+
+<hr>
+
+<% local.pieces.footer(); %>
+
