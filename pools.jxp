@@ -1,31 +1,4 @@
 <% local.pieces.header(); %>
-
-<h2>Pools</h2>
-
-<%
-
-    core.content.table();
-db.pools.ensureIndex( { name : 1 } );
-    var tab = new htmltable( 
-     {
-	 ns : db.pools ,
-	 cols : [ 
-		 { name : "name" } ,
-                 { name : "type" } ,
-                 { name : "machines" }
-		 ] ,
-	     detailUrl : "/pool_edit?_id=" ,
-	     searchable : true ,
-	     }
-     );
-tab.dbview( tab.find().sort( { name : 1 } ) );
-
-
-%>
-
-<br>
-<a href="pool_edit"><b>New Pool</b></a><br>
-
-
+<% local.pieces.itemList( "pool" , "Pool" , "name" , [ "type" , "machines" ] ) %>
 <% local.pieces.footer(); %>
 

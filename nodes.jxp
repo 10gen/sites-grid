@@ -1,40 +1,4 @@
 <% local.pieces.header(); %>
-
-<h2>Nodes</h2>
-
-<%
-
-    if ( request.action == "delete" && request._id ){
-	var toDelete = db.nodes.findOne( request._id );
-	if ( toDelete ){
-	    db.nodes.remove( toDelete );
-	    print( "deleted <b>" + toDelete.machine + "</b>" );
-	}
-    }
-
-db.dbs.ensureIndex( { name : 1 } );
-    core.content.table();
-
-    var tab = new htmltable( 
-     {
-	 ns : db.nodes ,
-	 cols : [ 
-    { name : "machine" }
-                  ] ,
-	     detailUrl : "/node_edit?_id=" ,
-	     searchable : true ,
-	 actions : [ { name : "delete" } ] 
-	     }
-     );
-tab.dbview( tab.find().sort( { machine : 1 } ) );
-
-
-%>
-
-<br>
-<a href="node_edit"><b>Add Node</b></a><br>
-
-
-
+<% local.pieces.itemList( "node" , "Node" , "machine" ) %>
 <% local.pieces.footer(); %>
 

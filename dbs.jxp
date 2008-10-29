@@ -1,33 +1,4 @@
 <% local.pieces.header(); %>
-
-<h2>DBs</h2>
-
-<%
-
-db.dbs.ensureIndex( { name : 1 } );
-    core.content.table();
-
-    var tab = new htmltable( 
-     {
-	 ns : db.dbs ,
-	 cols : [ 
-    { name : "name" } ,
-    { name : "type" } ,
-    { name : "machine" }
-                  ] ,
-	     detailUrl : "/db_edit?_id=" ,
-	     searchable : true ,
-	     }
-     );
-tab.dbview( tab.find().sort( { name : -1 } ) );
-
-
-%>
-
-<br>
-<a href="db_edit"><b>New DB</b></a><br>
-
-
-
+<% local.pieces.itemList( "db" , "Database" , "name" , [ "type" ] ) %>
 <% local.pieces.footer(); %>
 

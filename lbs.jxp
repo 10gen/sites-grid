@@ -1,40 +1,4 @@
 <% local.pieces.header(); %>
-
-<h2>Load Balancerss</h2>
-
-<%
-
-    if ( request.action == "delete" && request._id ){
-	var toDelete = db.lbs.findOne( request._id );
-	if ( toDelete ){
-	    db.lbs.remove( toDelete );
-	    print( "deleted <b>" + toDelete.machine + "</b>" );
-	}
-    }
-
-db.dbs.ensureIndex( { name : 1 } );
-    core.content.table();
-
-    var tab = new htmltable( 
-     {
-	 ns : db.lbs ,
-	 cols : [ 
-    { name : "machine" }
-                  ] ,
-	     detailUrl : "/lb_edit?_id=" ,
-	     searchable : true ,
-	 actions : [ { name : "delete" } ] 
-	     }
-     );
-tab.dbview( tab.find().sort( { name : 1 } ) );
-
-
-%>
-
-<br>
-<a href="lb_edit"><b>New Load Balancer</b></a><br>
-
-
-
+<% local.pieces.itemList( "lb" , "Load Balancer" , "machine" ) %>
 <% local.pieces.footer(); %>
 

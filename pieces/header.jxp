@@ -16,6 +16,7 @@
         <li><a href="/pools">Pools</a></li>
         <li><a href="/dbs">DBs</a></li>
         <li><a href="/lbs">Load Balancers</a></li>
+        <li><a href="/nodes">Nodes</a></li>
         <li><a href="/modules">Modules</a></li>
         <li><a href="/resetSite">Reset Site</a></li>
         <li><a href="/zeus">Zeus</a></li>
