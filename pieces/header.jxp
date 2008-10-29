@@ -18,6 +18,7 @@
         <li><a href="/lbs">Load Balancers</a></li>
         <li><a href="/nodes">Nodes</a></li>
         <li><a href="/modules">Modules</a></li>
+        <li>---</li>
         <li><a href="/resetSite">Reset Site</a></li>
         <li><a href="/zeus">Zeus</a></li>
         <li><a href="/firewall">firewall</a></li>

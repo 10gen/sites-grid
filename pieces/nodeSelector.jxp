@@ -1,0 +1,60 @@
+<%
+
+if ( ! nodeSelectorInit ){
+    
+    var yuiRoot = "/@@/yui/2.6/";
+    
+    head.addCSS( yuiRoot + "/treeview/assets/skins/sam/treeview.css" );
+    head.addCSS( yuiRoot + "/button/assets/skins/sam/button.css" );
+    
+    head.addScript( yuiRoot + "yuiloader/yuiloader-min.js" );
+    head.addScript( yuiRoot + "event/event-min.js" );
+    head.addScript( yuiRoot + "dom/dom-min.js" );
+    head.addScript( yuiRoot + "logger/logger-min.js" );
+    head.addScript( yuiRoot + "treeview/treeview-debug.js" );
+    head.addScript( yuiRoot + "element/element-beta-min.js" );
+    head.addScript( yuiRoot + "button/button-min.js" );
+    
+    
+    var nodes = {};
+    db.nodes.find().forEach( 
+        function(z){
+            var s = new Cloud.Server( z.machine );
+
+            if ( ! s.real )
+                return;
+            
+            var providers = nodes[s.location];
+            if ( ! providers ){
+                providers = {};
+                nodes[s.location] = providers;
+            }
+            
+            var numbers = providers[s.provider];
+            if ( ! numbers ){
+                numbers = [];
+                providers[s.provider] = numbers;
+            }
+            
+            numbers.add( s.number  );
+        }
+    );
+
+    print( "<script>\n gridNodes =" + tojson( nodes ) + "\n</script>" );
+
+
+    head.addScript( "/assets/checkedTree.js" );
+    head.addScript( "/assets/nodeSelector.js" );
+
+    head.addCSS( "/assets/nodeSelector.css" );
+
+    nodeSelectorInit = true;
+}
+
+%>    
+
+node selector
+
+
+<div id="treeDiv1"></div>
+
