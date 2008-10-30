@@ -13,10 +13,12 @@ coll.ensureIndex( idxObject );
 var fields = [];
 
 var foo = coll.findOne();
-if ( foo.name )
-    fields.add( "name" );
-if ( foo.machine )
-    fields.add( "machine" );
+if ( foo ){
+    if ( foo.name )
+        fields.add( "name" );
+    if ( foo.machine )
+        fields.add( "machine" );
+}
 
 if ( extraFields ){
     if ( isString( extraFields ) ){
