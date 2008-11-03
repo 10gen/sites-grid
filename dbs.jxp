@@ -1,4 +1,4 @@
 <% local.pieces.header(); %>
-<% local.pieces.itemList( "db" , "Database" , "name" , [ "type" ] ) %>
+<% local.pieces.itemList( "db" , "Database Server" , "name" , [ "type" ] ) %>
 <% local.pieces.footer(); %>
 

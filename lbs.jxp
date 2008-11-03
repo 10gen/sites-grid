@@ -1,4 +1,35 @@
 <% local.pieces.header(); %>
-<% local.pieces.itemList( "lb" , "Load Balancer" , "machine" ) %>
+<% /* local.pieces.itemList( "lb" , "Load Balancer" , "machine" ) */ %>
+<%
+    var current = db.lbs.find().toArray().map( function(z){ return z.machine; } );
+
+if ( request.machines ){
+    var want = request.getParameters( "machines" );
+    
+    for each ( var m in want ){
+        if ( ! current.contains( m ) ){
+            print( "need to add " + m + "<BR>" );
+            db.lbs.save( { machine : m } );
+        }
+    }
+    
+    for each ( var old in current ){
+        if ( ! want.contains( old ) ){
+            db.lbs.remove( { machine : old } );
+        }
+    }
+
+    current = db.lbs.find().toArray().map( function(z){ return z.machine; } );
+}
+else if ( request.action == "Save" ){
+    print( "<br><b>You have to have at least 1 load balancer!</b>" )
+}
+
+%>
+<h3>Load Balancers</h3>
+<form>
+  <% local.pieces.nodePicker( "machines" , true , current ); %>
+  <input type="submit" name="action" value="Save"> 
+</form>
 <% local.pieces.footer(); %>
 

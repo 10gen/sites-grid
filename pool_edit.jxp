@@ -15,6 +15,7 @@
    Forms.fillInObject( "" , mypool );
 
    if ( mypool.machines && isString( mypool.machines ) ){
+       mypool.machines = request.getParameters( "machines" ).join( "," );
        mypool.machines = mypool.machines.split( /[ ,]+/ ).filter( function(z){ 
                z = z.trim();
                return z.length > 0;
@@ -52,8 +53,7 @@
 
     <tr>
       <th>Machines</th>
-      <td><input name="machines">(<%= mypool && mypool.machines ? mypool.machines.length : 0 %>)</td>
-      <td>comma or space seperated</td>
+      <td><% local.pieces.nodePicker( "machines" , true , ( mypool || {} ).machines  ) %></td>
       
     </tr>
 

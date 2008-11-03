@@ -30,7 +30,7 @@
   <table>
     <tr>
       <th>Machine</th>
-      <td><input name="machine"></td>
+      <td><% local.pieces.nodePicker( "machine" , false , mylb.machine ) %></td>
     </tr>
   </table>
 

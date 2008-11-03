@@ -1,14 +1,14 @@
 <html>
   <head>
     <style>
-      ul { display: inline; }
-      li { display: inline; }
+      .header ul { display: inline; }
+      .header li { display: inline; }
     </style>
   </head>
   
   <body>
 
-    <div style="border-bottom: 1px solid red;">
+    <div class="header" style="border-bottom: 1px solid red;">
       10 Gen Operator Site
 
       <ul>

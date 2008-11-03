@@ -6,7 +6,7 @@
     
     function treeInit() {
 	YAHOO.log("Initializing TaskNode TreeView instance.")
-	buildTaskNodeTree();
+	buildTaskNodeTree( "treeDiv1" );
     }
     
     //handler for expanding all nodes
@@ -46,12 +46,12 @@
 
     //Function  creates the tree and 
     //builds between 3 and 7 children of the root node:
-    function buildTaskNodeTree() {
+    function buildTaskNodeTree( name ) {
 	if ( ! gridNodes )
             throw "no gridNodes";
 
 	//instantiate the tree:
-        tree = new YAHOO.widget.TreeView("treeDiv1");
+        tree = new YAHOO.widget.TreeView( name );
         
         for ( var location in gridNodes ){
             var locNode = new YAHOO.widget.TaskNode( location , tree.getRoot() , false );

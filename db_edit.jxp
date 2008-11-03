@@ -40,7 +40,7 @@
     </tr>
     <tr>
       <th>Machine</th>
-      <td><input name="machine"></td>
+      <td><% local.pieces.nodePicker( "machine" , false , mydb.machine ) %></td>
     </tr>
   </table>
 
@@ -52,7 +52,7 @@
 
 <h4>Sitess Using this</h4>
 
-<ul>
+<ul ? mydb.name >
   <forarray other ( db.sites.find( { "dbs.server" : mydb.name } ) ).toArray() >
     <li><a href="/site_edit?_id=<%= other._id %>"><%= other.name %></a></li>
   </forarray> 
