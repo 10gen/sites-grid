@@ -8,7 +8,7 @@
   
   <body>
 
-    <div class="header" style="border-bottom: 1px solid red;">
+    <div class="header" style="border-bottom: 1px solid black; padding-bottom: 5px; margin-bottom: 5px;">
       10 Gen Operator Site
 
       <ul>

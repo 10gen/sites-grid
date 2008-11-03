@@ -1,4 +1,40 @@
 <% local.pieces.header(); %>
-<% local.pieces.itemList( "node" , "Node" , "machine" ) %>
+
+<%
+    if ( request.action == "add" && request.new_nodes ){
+        for each ( var n in request.new_nodes.split( /[\r\n\s,]+/ ) ){
+            n = n.trim();
+            if ( n.length == 0 )
+                continue;
+            
+            if ( db.nodes.findOne( { machine : n } ) )
+                continue;
+
+            db.nodes.save( { machine : n } );
+        }
+    }
+
+if ( request.action == "delete" && request.machines ){
+    for each ( var n in request.getParameters( "machines" ) ){
+        db.nodes.remove( { machine : n } );
+    }
+}
+
+%>
+
+<h2>Nodes</h2>
+<form  action="/nodes/" >
+  <% local.pieces.nodePicker( "machines" , true , current ); %>
+  <input type="submit" name="action" value="delete">
+</form>
+
+<hr>
+
+<h3>Add Nodes</h3>
+<form method="post" action="/nodes" >
+  <textarea name="new_nodes" cols=60 rows=10 ></textarea>
+  <input type="submit" name="action" value="add">
+</form>
+
 <% local.pieces.footer(); %>
 
