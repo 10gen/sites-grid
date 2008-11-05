@@ -1,8 +1,10 @@
   
-  <hr>
-  This is private internal 10gen.
-
-  </div>
+        <div id="footer">
+       Internal 10gen grid management<br>
+       Rendered : <%= ( new Date() ).format( "yyyy-MM-dd hh:mm:ss Z" ) %>
+     </div>
+  
+   </div> <!-- closes main content -->
 
   </body>
 </html>
