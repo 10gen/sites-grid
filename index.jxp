@@ -1,6 +1,6 @@
 <% local.pieces.header(); %>
 
-10gen grid management
+<h1>10gen grid management</h1>
 
 <% local.pieces.footer(); %>
 
