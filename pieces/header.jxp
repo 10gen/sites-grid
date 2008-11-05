@@ -1,13 +1,22 @@
 <%
-inSites = request.getURI().match( /^.sites/ );
-inPools = request.getURI().match( /^.pools/ );
-inDBs = request.getURI().match( /^.dbs/ );
-inLoad = request.getURI().match( /^.lbs/ );
-inNodes = request.getURI().match( /^.nodes/ );
-inModules = request.getURI().match( /^.modules/ );
-inReset = request.getURI().match( /^.resetSite/ );
-inZeus = request.getURI().match( /^.zeus/ );
-inFirewall = request.getURI().match( /^.firewall/ );
+var sections = [ 
+    { link : "sites" , name : "Sites" } , 
+    { link : "pools" , name : "Pools" } , 
+    { link : "dbs" , name : "Database Servers" } , 
+    { link : "lbs" , name : "Load Balancers" } , 
+    { link : "nodes" , name : "Nodes" } , 
+    { link : "modules" , name : "Modules" } , 
+    { link : "firewall" , name : "Firewall" } 
+];
+    
+for each ( var x in sections ){
+    if ( request.getURI().startsWith( "/" + x.link ) || 
+         ( x.link.endsWith( "s" ) && request.getURI().startsWith( "/" + x.link.replace( /s$/ , "_" ) ) ) 
+       ){
+        x.css = "tab_selected";        
+    }
+}
+
 %>
 <html>
   <head>
@@ -21,38 +30,14 @@ inFirewall = request.getURI().match( /^.firewall/ );
   <body>
 
     <div id="tab_controller" style="background-color: #6eaf6c; width:100%; ">
-          <ul>
-			<li style="margin-top: 0; "><a href="/" style="border:none;padding:0"><img src="assets/10gen_logo_xs.gif"></a></li>
-			<li style="margin-left: .5em; margin-right: 4em; margin-top: 11px; font-size: 17px; font-weight:bold; color:#1c3b83;  ">Operator Site</li>
-            <li class="tab <%= inSites ? 'tab_selected' : '' %>" ><a href="/sites">Sites</a></li>
-            <li class="tab <%= inPools ? 'tab_selected' : '' %>"><a href="/pools">Pools</a></li>
-            <li class="tab <%= inDBs ? 'tab_selected' : '' %>"><a href="/dbs">DBs</a></li>
-            <li class="tab <%= inLoad ? 'tab_selected' : '' %>"><a href="/lbs">Load Balancers</a></li>
-            <li class="tab <%= inNodes ? 'tab_selected' : '' %>"><a href="/nodes">Nodes</a></li>
-            <li class="tab <%= inModules ? 'tab_selected' : '' %>" style="margin-left: 2em; "><a href="/modules">Modules</a></li>
-            <li class="tab <%= inReset ? 'tab_selected' : '' %>"><a href="/resetSite">Reset Site</a></li>
-            <li class="tab <%= inZeus ? 'tab_selected' : '' %>"><a href="/zeus">Zeus</a></li>
-            <li class="tab <%= inFirewall ? 'tab_selected' : '' %>"><a href="/firewall">Firewall</a></li>
-		  </ul>
-	</div>
-	<div id="maincontent">
+      <ul>
 
+	<li style="margin-top: 0; "><a href="/" style="border:none;padding:0"><img src="assets/10gen_logo_xs.gif"></a></li>
+	<li style="margin-left: .5em; margin-right: 4em; margin-top: 11px; font-size: 17px; font-weight:bold; color:#1c3b83;  ">Operator Site</li>
+        
+        <forarray x sections >
+          <li class="tab <%= x.css || "" %>"><a href="/<%= x.link %>"><%= x.name %></a></li>
+        </forarray>
 
-
-    <!--div class="header" style="border-bottom: 1px solid #ddd; margin-bottom: 15px;">
-      <img src="assets/10gen_logo_xs.gif"> <span style="color:#133380; font-size: 16px; font-weight: bold; position:relative; top:-10px; left:5px;  ">Operator Site</span>
-
-      <ul class="tabs" style="position:relative; top:-10px; ">
-        <li><a href="/sites">Sites</a></li>
-        <li><a href="/pools">Pools</a></li>
-        <li><a href="/dbs">DBs</a></li>
-        <li><a href="/lbs">Load Balancers</a></li>
-        <li><a href="/nodes">Nodes</a></li>
-        <li><a href="/modules">Modules</a></li>
-        <li>---</li>
-        <li><a href="/resetSite">Reset Site</a></li>
-        <li><a href="/zeus">Zeus</a></li>
-        <li><a href="/firewall">firewall</a></li>
-      </ul>
-    </div-->
-
+    </div>
+    <div id="maincontent">
