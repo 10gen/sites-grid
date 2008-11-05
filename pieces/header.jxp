@@ -5,7 +5,7 @@ var sections = [
     { link : "dbs" , name : "Database Servers" } , 
     { link : "lbs" , name : "Load Balancers" } , 
     { link : "nodes" , name : "Nodes" } , 
-    { link : "modules" , name : "Modules" } , 
+    { link : "modules" , name : "Modules" , style : "margin-left: 2em;" } , 
     { link : "firewall" , name : "Firewall" } 
 ];
     
@@ -13,9 +13,18 @@ for each ( var x in sections ){
     if ( request.getURI().startsWith( "/" + x.link ) || 
          ( x.link.endsWith( "s" ) && request.getURI().startsWith( "/" + x.link.replace( /s$/ , "_" ) ) ) 
        ){
-        x.css = "tab_selected";        
+        x.css = ( x.css || "" ) + " tab_selected";        
     }
 }
+
+var externalDomain = "";
+try {
+    externalDomain = javaStatic( "ed.util.Config" , "getExternalDomain" );
+}
+catch ( e ){
+    externalDomain = "ERROR";
+}
+    
 
 %>
 <html>
@@ -33,10 +42,10 @@ for each ( var x in sections ){
       <ul>
 
 	<li style="margin-top: 0; "><a href="/" style="border:none;padding:0"><img src="assets/10gen_logo_xs.gif"></a></li>
-	<li style="margin-left: .5em; margin-right: 4em; margin-top: 11px; font-size: 17px; font-weight:bold; color:#1c3b83;  ">Operator Site</li>
+	<li style="margin-left: .5em; margin-right: 4em; margin-top: 11px; font-size: 17px; color:#1c3b83;  ">Operator Site for <b><%= externalDomain %></b></li>
         
         <forarray x sections >
-          <li class="tab <%= x.css || "" %>"><a href="/<%= x.link %>"><%= x.name %></a></li>
+          <li class="tab <%= x.css || "" %>" style="<%= x.style || "" %>"><a href="/<%= x.link %>"><%= x.name %></a></li>
         </forarray>
 
     </div>
