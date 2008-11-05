@@ -41,7 +41,7 @@ catch ( e ){
     <div id="tab_controller" style="background-color: #6eaf6c; width:100%; ">
       <ul>
 
-	<li style="margin-top: 0; "><a href="/" style="border:none;padding:0"><img src="assets/10gen_logo_xs.gif"></a></li>
+	<li style="margin-top: 0; "><a href="/" style="border:none;padding:0"><img src="/assets/10gen_logo_xs.gif"></a></li>
 	<li style="margin-left: .5em; margin-right: 4em; margin-top: 11px; font-size: 17px; color:#1c3b83;  ">Operator Site for <b><%= externalDomain %></b></li>
         
         <forarray x sections >
