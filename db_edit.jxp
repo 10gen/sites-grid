@@ -14,6 +14,10 @@
 
    Forms.fillInObject( "" , mydb );
    
+   if ( isString( mydb.slaves ) ){
+       mydb.slaves = mydb.slaves.split( "[, ]+" );
+   }
+
    if ( request.action == "save" ){ 
       db.dbs.save( mydb );
       return response.sendRedirectTemporary( "/dbs" );
@@ -27,7 +31,7 @@
   
   <input type="hidden" name="_id">
   
-  <table>
+  <table border='1'>
     <tr>
       <th>Name</th>
       <td><input name="name"></td>
@@ -41,6 +45,11 @@
     <tr>
       <th>Machine</th>
       <td><% local.pieces.nodePicker( "machine" , false , mydb.machine ) %></td>
+    </tr>
+
+    <tr>
+      <th>Slaves</th>
+      <td><% local.pieces.nodePicker( "slaves" , true , mydb.slaves ) %></td>
     </tr>
   </table>
 
