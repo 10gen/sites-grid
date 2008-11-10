@@ -22,7 +22,7 @@ var tab = new htmltable(
     }
 );
 var sortThing = {};
-sortThing[ request.sort || "name " ] = 1;
+sortThing[ request.sort || "name " ] = request.getInt( "order" , 1 );
 tab.dbview( tab.find().sort( sortThing ) );
 
 %>
