@@ -1,13 +1,38 @@
 <%
-var sections = [ 
-    { link : "sites" , name : "Sites" } , 
-    { link : "pools" , name : "Pools" } , 
-    { link : "dbs" , name : "Database Servers" } , 
-    { link : "lbs" , name : "Load Balancers" } , 
-    { link : "nodes" , name : "Nodes" } , 
-    { link : "modules" , name : "Modules" , style : "margin-left: 2em;" } , 
-    { link : "firewall" , name : "Firewall" } 
-];
+
+var sections = [];
+
+if ( initialConfig && db.pools.findOne( { type : "PROD" } ) && db.dbs.findOne( { type : "PROD" } ) ){
+    // have the pieces i need setup
+    if ( db.users.findOne() ){
+        var s = new Cloud.Site( "admin" );
+        s.upsertDB( "prod" );
+        s.upsertEnvironment( "www" , "master" , "prod" );
+        s.gitroot = "git://github.com/10gen/sites-admin";
+        db.sites.save( s );
+        initialConfig = false;
+    }
+    else if ( ! request.getURI().startsWith( "/initialUser" ) ){
+        return response.sendRedirectTemporary( "/initialUser" );
+    }
+}
+
+if ( ! initialConfig ){
+    sections.add( { link : "sites" , name : "Sites" });
+}
+
+if ( ! initialConfig || db.nodes.findOne() ){
+    sections.add( { link : "pools" , name : "Pools" } );
+    sections.add( { link : "dbs" , name : "Database Servers" } );
+    sections.add( { link : "lbs" , name : "Load Balancers" } );
+}
+
+sections.add( { link : "nodes" , name : "Nodes" } );
+
+if ( ! initialConfig ){
+    sections.add( { link : "modules" , name : "Modules" , style : "margin-left: 2em;" } );
+    sections.add( { link : "firewall" , name : "Firewall" } );
+}
     
 for each ( var x in sections ){
     if ( request.getURI().startsWith( "/" + x.link ) || 
@@ -51,9 +76,10 @@ catch ( e ){
     </div>
 
     <div ? initialConfig id="initialConfig">
-      WARNING: I think you're doing your initial system configuration.  If this is incorrect, there could be massive problems<br>
-      security might be compromised<br>
-      You need to have an admin site configured before this will go away.
+      <p>You are in the middle of your 10gen cloud initial setup</p>
+      <p>This will guide you through what you need to do.  Look at whats on top.  You will need to setup <b>nodes</b>, a <b>databaser server</b>, and an <b>application server pool</b>.</p>
+
+
     </div>
 
     <div id="maincontent">

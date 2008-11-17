@@ -31,8 +31,6 @@ function allowed( req , res , uri ){
         return;
     }
     
-    if ( user )
-        return null;
     
     if ( ! hasValidAdminConfig() ){
         // so there is a db, but nothing in it
@@ -41,7 +39,8 @@ function allowed( req , res , uri ){
         return null;
     }
     
-    
+    if ( user )
+        return null;
 
     return Auth.reject();
 }
@@ -54,7 +53,7 @@ function hasValidAdminConfig(){
     return a.dbs.length > 0 && a.environments.length > 0;
 }
 
-var envTypes = [ "DEV" , "TEST" , "BACKUP" , "STAGE" , "PROD" ];
+var envTypes = [ "PROD" , "TEST" , "DEV" , "BACKUP" , "STAGE" ];
 
 function envTypeSelect( name , curType ){
     return selectBox( name , envTypes , curType );
@@ -92,7 +91,7 @@ ConfigChange = function( o , n ){
     this.diff = Util.Diff.diff( o , n );
 
     this.ts = new Date();
-    this.user = user.email;
+    this.user = user ? user.email : "initial config";
 
     assert( this.user );
     assert( o._id == n._id );
@@ -152,3 +151,7 @@ resetSiteOnHost = function( machine , hostName , command ){
     var res = sysexec( cmd );
     return res;
 }
+
+routes = null;
+
+User.requirements = {};

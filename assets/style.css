@@ -204,8 +204,8 @@ p#footer {
 #initialConfig { 
   clear: both;
   width: 100%;
-  font-size: 2em;
-  background-color: red;
+  font-size: 1.2em;
+  background-color: green;
   color: black;
   padding-top: .5em;
   padding-bottom: .5em;

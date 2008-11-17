@@ -1,0 +1,9 @@
+<% local.pieces.header(); %>
+
+<h2>You are almost there</h2>
+<h3>Now you just need an initial user!</h3>
+
+<% core.user.html.register(); %>
+
+<% local.pieces.footer(); %>
+
