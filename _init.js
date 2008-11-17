@@ -51,7 +51,7 @@ function hasValidAdminConfig(){
     if ( ! a )
         return false;
     
-    return a.dbs.length > 0 && a.environment.length > 0;
+    return a.dbs.length > 0 && a.environments.length > 0;
 }
 
 var envTypes = [ "DEV" , "TEST" , "BACKUP" , "STAGE" , "PROD" ];
