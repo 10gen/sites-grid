@@ -31,9 +31,27 @@ function allowed( req , res , uri ){
         return;
     }
     
-    if ( ! user )
-        return Auth.reject();
+    if ( user )
+        return null;
     
+    if ( ! hasValidAdminConfig() ){
+        // so there is a db, but nothing in it
+        // i'm assuming we're in initial config
+        initialConfig = true;
+        return null;
+    }
+    
+    
+
+    return Auth.reject();
+}
+
+function hasValidAdminConfig(){
+    var a = db.sites.findOne( { name : "admin" } );
+    if ( ! a )
+        return false;
+    
+    return a.dbs.length > 0 && a.environment.length > 0;
 }
 
 var envTypes = [ "DEV" , "TEST" , "BACKUP" , "STAGE" , "PROD" ];

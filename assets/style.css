@@ -200,3 +200,14 @@ p#footer {
   font-size: .7em;
   border-top: 1px solid #2c65af;
 }
+
+#initialConfig { 
+  clear: both;
+  width: 100%;
+  font-size: 2em;
+  background-color: red;
+  color: black;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  text-align: center;
+}

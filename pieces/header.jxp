@@ -49,4 +49,11 @@ catch ( e ){
         </forarray>
 
     </div>
+
+    <div ? initialConfig id="initialConfig">
+      WARNING: I think you're doing your initial system configuration.  If this is incorrect, there could be massive problems<br>
+      security might be compromised<br>
+      You need to have an admin site configured before this will go away.
+    </div>
+
     <div id="maincontent">
