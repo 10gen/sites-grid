@@ -2,6 +2,9 @@
 
 <%
     if ( request.action == "add" && request.new_nodes ){
+        
+        var redir = initialConfig && ! db.nodes.findOne();
+
         for each ( var n in request.new_nodes.split( /[\r\n\s,]+/g ) ){
             n = n.trim();
             if ( n.length == 0 )
@@ -9,14 +12,13 @@
             
             if ( db.nodes.findOne( { machine : n } ) )
                 continue;
-
-            var redir = initialConfig && ! db.nodes.findOne();
             
             db.nodes.save( { machine : n } );
-
-            if ( redir )
-                throw Exception.Redirect( "/nodes" );
+            
         }
+        
+        if ( redir )
+            throw Exception.Redirect( "/nodes" );
     }
 
 if ( request.action == "delete" && request.machines ){
