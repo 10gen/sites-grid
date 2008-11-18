@@ -27,7 +27,7 @@ else if ( request.action == "Save" ){
 
 %>
 <h3>Load Balancers</h3>
-<form>
+<form method="post">
   <% local.pieces.nodePicker( "machines" , true , current ); %>
   <input type="submit" name="action" value="Save"> 
 </form>
