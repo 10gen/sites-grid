@@ -167,7 +167,7 @@ mysite.environments = mysite.environments.sort(
       </td>
     </tr>      
 
-    <form method="get">
+    <form method="post">
       <input type="hidden" name="type" value="d">
       <input type="hidden" name="_id" value="<%= request._id %>" >
       <input type="hidden" name="d_did" >      
@@ -227,11 +227,13 @@ mysite.environments = mysite.environments.sort(
       </td>
     </tr>
     <% print.setFormObject( ins , "i_" ); %>
-    <form method="post">
+    <form method="get">
       <input type="hidden" name="type" value="e">
       <input type="hidden" name="_id" value="<%= request._id %>" >
       <input type="hidden" name="i_iid" >
-      <input type="hidden" name="i_name" ></td>
+      <% if ( ins.name ) { %>
+      <input type="hidden" name="i_name" >
+      <% } %>
       <tr>
         <td>
 
