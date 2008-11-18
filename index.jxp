@@ -2,5 +2,34 @@
 
 <h1>10gen grid management</h1>
 
+<h2>Overview</h2>
+
+<h3>Load Balancers</h3>
+<ul>
+  <forarray thing db.lbs.find().toArray() >
+    <li><%= thing.machine %></li>
+  </forarray>
+</ul>
+
+
+<h3>Databases</h3>
+<ul>
+  <forarray thing db.dbs.find().toArray() >
+    <li><%= thing.name %> <%= thing.mode %> <%= thing.machine || "" %> <%= thing.pairs || "" %></li>
+  </forarray>
+</ul>
+
+<h3>Application Server Pools</h3>
+<ul>
+  <forarray thing db.pools.find().toArray() >
+    <li><%= thing.name %> <%= thing.machines %></li>
+  </forarray>
+</ul>
+
+
+
+<br>
 <% local.pieces.footer(); %>
+
+
 
