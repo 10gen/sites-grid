@@ -3,28 +3,85 @@
 <h3>DB Edit</h3>
 
 <%
-   
-   core.content.forms();
 
-   var mydb = null;
+var error = false;
 
-   if ( request._id ) mydb = db.dbs.findOne( ObjectId( request._id ) );
-   
-   if ( ! mydb ) mydb = {};
+function myerror( msg ){
+    print( "<b class='error'>" + msg + "</b>" )
+    error = true;
+}
 
-   Forms.fillInObject( "" , mydb );
-   
-   if ( isString( mydb.slaves ) ){
-       mydb.slaves = mydb.slaves.split( "[, ]+" );
-   }
+core.content.forms();
 
-   if ( request.action == "save" ){ 
-      db.dbs.save( mydb );
-      return response.sendRedirectTemporary( "/dbs" );
-   }
-   
-   print.setFormObject( mydb );
-   
+var mydb = null;
+
+if ( request._id ) mydb = db.dbs.findOne( ObjectId( request._id ) );
+
+if ( ! mydb ) mydb = {};
+
+print( "<pre>\n" + tojson( mydb ) + "\n</pre>" );
+
+Forms.fillInObject( "" , mydb );
+
+if ( isString( mydb.slaves ) ){
+    mydb.slaves = mydb.slaves.split( "[, ]+" );
+}
+
+if ( request.action == "save" ){
+
+    if ( request.mode == "master" ){
+        if ( ! request.machine ){
+            myerror( "need a machine" );
+        }
+        delete mydb.pairs;
+        delete mydb.right;
+    }
+    else if ( request.mode == "paired" ){
+        if ( ! request.machine ){
+            myerror( "need left node" );
+        }
+        else if ( ! request.right ){
+            myerror( "need right node" );
+        }
+        else if ( request.machine == request.right ){
+            myerror( "left and right have to be different" );
+        }
+        else {
+            // good
+            mydb.pairs = [ request.machine , request.right ];
+            delete mydb.machine;
+            delete mydb.right;
+        }
+    }
+    else {
+        myerror( "unknonwn mode [" + request.mode + "]" );
+    }
+    
+    if ( ! error ){
+        delete mydb.action;
+        delete mydb.session;
+
+        db.dbs.save( mydb );
+        return response.sendRedirectTemporary( "/dbs" );
+    }
+
+}
+
+print.setFormObject( mydb );
+
+var paired = false;
+if ( mydb.pairs )
+    paired = true;
+else if ( mydb.machine )
+    paired = false;
+else 
+    paired = true; // default for new things
+
+if ( mydb.pairs ){
+    mydb.machine = mydb.pairs[0];
+    mydb.right = mydb.pairs[1];
+}
+
 %>
 
 <form>
@@ -42,9 +99,21 @@
         <%= envTypeSelect( "type" , mydb.type ) %>
       </td>
     </tr>
+    
+    <tr>
+      <th>Mode</th>
+      <td>
+        <input type="radio" name="mode" value="master" <%= ! paired ? "checked" : "" %> onClick="switchMode(this)" >master
+        <input type="radio" name="mode" value="paired" <%= paired ? "checked" : "" %>  onClick="switchMode(this)">paired
+      </td>
+    </tr>
+
     <tr>
       <th>Machine</th>
+
       <td><% local.pieces.nodePicker( "machine" , false , mydb.machine ) %></td>
+      <td id='right_node' style="display: <%= paired ? "block" : "none" %>;"><% local.pieces.nodePicker( "right" , false , mydb.right ) %></td>
+      
     </tr>
 
     <tr>
@@ -66,6 +135,18 @@
     <li><a href="/site_edit?_id=<%= other._id %>"><%= other.name %></a></li>
   </forarray> 
 </ul>
+
+<script>
+  function switchMode( i ){
+
+     if ( i.value == "master" ){
+        document.getElementById( "right_node" ).style.display = "none";
+     }
+     else {
+        document.getElementById( "right_node" ).style.display = "block";
+     }
+  }
+</script>
 
 <% local.pieces.footer(); %>
 
