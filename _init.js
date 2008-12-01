@@ -147,7 +147,7 @@ resetSiteOnPool = function( pool , hostName , command ){
 
 resetSiteOnHost = function( machine , hostName , command ){
     command = command || "reset";
-    var cmd = "ssh " + machine + " \"curl -D - -s -H 'Host: " + hostName + "'\" local.10gen.com:8080/~" + command;
+    var cmd = "ssh " + machine + " \"curl -D - -s -H 'Host: " + hostName + "'\" 127.0.0.1:8080/~" + command;
     var res = sysexec( cmd );
     return res;
 }
@@ -155,3 +155,5 @@ resetSiteOnHost = function( machine , hostName , command ){
 routes = null;
 
 User.requirements = {};
+
+externalDomain = javaStatic( "ed.util.Config" , "getExternalDomain" );
