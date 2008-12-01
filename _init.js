@@ -5,6 +5,13 @@ core.user.auth();
 core.util.diff();
 core.content.table();
 
+/**
+* this is because we use the sudo hack below
+*/
+User.getSiteName = function(){
+    return "admin";
+}
+
 /* Function allowed() is called on every request before processing for authentication purposes. 
    The default implementation below denies non-admin users access to anything under /admin/ on the 
    site, but keeps the site completely open otherwise.
