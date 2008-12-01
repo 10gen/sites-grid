@@ -28,8 +28,11 @@ if ( isString( mydb.slaves ) ){
 }
 
 if ( request.action == "save" ){
-
-    if ( request.mode == "master" ){
+    
+    if ( ! request.name ){
+        myerror( "need a db name" );
+    }
+    else if ( request.mode == "master" ){
         if ( ! request.machine ){
             myerror( "need a machine" );
         }
