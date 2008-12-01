@@ -50,6 +50,8 @@ if ( request.action == "delete" && request.id ){
 
 %>
 
+<div class="container">
+
 <table border="1">
 
   <tr>
@@ -77,6 +79,8 @@ if ( request.action == "delete" && request.id ){
 
 <a href="/firewall?action=rules">rules</a> |
 <a href="/firewall?action=router-rules">router rules</a>
+
+</div>
 
 <% local.pieces.footer(); %>
 

@@ -1,41 +1,40 @@
 <% local.pieces.header(); %>
 
-<h2>Sites</h2>
+<h1>Sites</h1>
+<div class="container">
 
-<%
+  <%
 
-db.sites.ensureIndex( { created : 1 } );
-core.content.table();
+  db.sites.ensureIndex( { created : 1 } );
+  core.content.table();
 
-var tab = new htmltable( 
-    {
-	ns : db.sites ,
-	cols : [ 
-	    { name : "name" } ,
-            { name : "created" , view : function(z){ return z.format("yyyy-MM-dd"); } , sortable : true  } ,
-            { name : "environments" , view : function(z){ return z.length; } },
-            { name : "dbs" , view : function(z){ return z.length; } } 
-	] ,
-        detail : function(z){ return "/site_edit/" + z.name; } ,
-	searchable : true ,
-	sortable : true ,
-    }
-);
-var sortThing = {};
-sortThing[ request.sort || "name " ] = request.getInt( "order" , 1 );
-tab.dbview( tab.find().sort( sortThing ) );
+  var tab = new htmltable( 
+      {
+  	ns : db.sites ,
+  	cols : [ 
+  	    { name : "name" } ,
+              { name : "created" , view : function(z){ return z.format("yyyy-MM-dd"); } , sortable : true  } ,
+              { name : "environments" , view : function(z){ return z.length; } },
+              { name : "dbs" , view : function(z){ return z.length; } } 
+  	] ,
+          detail : function(z){ return "/site_edit/" + z.name; } ,
+  	searchable : true ,
+  	sortable : true ,
+      }
+  );
+  var sortThing = {};
+  sortThing[ request.sort || "name " ] = request.getInt( "order" , 1 );
+  tab.dbview( tab.find().sort( sortThing ) );
 
-%>
+  %>
 
+  <h3>New Site</h3>
+  <form method="post" action="/site_edit">
+    Name: <input name="newName"><br>
+    Git Url: <input name="giturl"><br>
+    <input name="action" type="submit" value="Add">
+  </form>
 
-<hr>
-
-<h3>New Site</h3>
-<form method="post" action="/site_edit">
-  Name: <input name="newName"><br>
-  Git Url: <input name="giturl"><br>
-  <input name="action" type="submit" value="Add">
-</form>
-
+</div>
 <% local.pieces.footer(); %>
 

@@ -1,6 +1,8 @@
 <% local.pieces.header(); %>
 
-<h3>Site Edit</h3>
+<h1>Site Edit</h1>
+
+<div class="container">
 
 <%
    
@@ -295,7 +297,7 @@ mysite.environments = mysite.environments.sort(
 
 <% local.pieces.changes( mysite ); %>
 
-
+</div>
 
 <% local.pieces.footer(); %>
 

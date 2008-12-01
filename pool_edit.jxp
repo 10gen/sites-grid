@@ -1,6 +1,7 @@
 <% local.pieces.header(); %>
 
-<h3>Pool Edit</h3>
+<h1>Pool Edit</h1>
+<div class="container">
 
 <%
    
@@ -65,6 +66,8 @@
 
 
 <% local.pieces.changes( mypool ); %>
+
+<div>
 
 <% local.pieces.footer(); %>
 

@@ -1,6 +1,7 @@
 <% local.pieces.header(); %>
 
-<h2>Modules</h2>
+<h1>Modules</h1>
+<div class="container">
 
 <%
 
@@ -20,6 +21,8 @@ var tab = new htmltable(
 tab.dbview( tab.find( { name : /(\-modules\/|^corejs$|^external$)/ } ).sort( { name : 1 } ) );
 
 %>
+
+</div>
 
 <% local.pieces.footer(); %>
 

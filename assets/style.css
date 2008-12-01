@@ -1,12 +1,11 @@
 html, body, form, fieldset, 3a9737, h2, h3, h4, h5, h6, p, pre, blockquote, ul, ol, dl, address {
-	margin:0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 }
 
 body {
- 	margin: 1em;
+ 	margin: 0;
 	padding: 0;
-	background-color: #ffffff;
 	font-family: helvetica, arial, sans-serif;
 	font-size:85%;
 	color: #333;
@@ -24,13 +23,11 @@ h1, h2, h3, h4, p, ul, ol, dl {
 
 h1 {
 	padding-bottom: 0;
-	font-size: 148%;
-	font-weight: normal;
+	font-size: 138.5%;
 }
 
 h2 {
-	font-size: 131%;
-	font-weight: normal; 
+	font-size: 123.1%;
 }  
 
 h3 {
@@ -50,6 +47,7 @@ hr {
 	background-color: #ddd;
 }
 
+
 div.hr hr {
 	display: none;
 }
@@ -57,7 +55,7 @@ div.hr hr {
 ul, ol {position: relative; }
 
 ul, ol {
-	margin-left: 2em;
+	margin-left: 0;
 }
 
 ul li {
@@ -136,20 +134,29 @@ p#footer {
 	font-size: 73%;
 }
 
-#tab_controller {
-	clear: both;
-}
-
 #tab_controller ul {
     list-style: none;
-    margin: .5em 0 0 0;
-    padding: 0px;
+    margin: 0 0 0 0;
+    padding: 8px 0 0 0;
 }
 
 #tab_controller li {
     float: left;
 	margin-top: 15px;
 	list-style-type: none;
+}
+
+#tab_controller li.opsite {
+	margin-left: 1.5em; 
+	margin-right: 4em; 
+	margin-top: 11px;
+	font-size: 17px; 
+	color:#1c3b83;  
+}
+
+#tab_controller li.logo {
+    margin-top: 0;
+	margin-left: 1em;
 }
 
 #tab_controller li a, #tab_controller li a:visited {
@@ -162,8 +169,7 @@ p#footer {
 }
 
 #tab_controller li a:hover {
-	background-color:#2c65af;
-	color:#fff;
+	text-decoration: underline;
 }
 
 #tab_controller li.tab_selected a, #tab_controller li.tab_selected a:visited {
@@ -189,25 +195,90 @@ p#footer {
     padding: 4px 8px; 
 }
 
+div.bordertop {
+	clear:both;
+	border-top: 1px solid #2C65AF;
+}
+
 #maincontent {
-	clear: both;
-	border-top: 1px solid #2c65af;
+	margin: 0;
+}
+
+#maincontent div.container {
+	padding: 0 1em 2em 1em;
+	min-height: 400px;
+}
+
+#maincontent div.container table {
+	border: 1px solid #ccc;
+}
+
+#maincontent div.container table td {
+	padding: .5em;
+}
+
+#maincontent div.container table.htmltable {
+	border: none;
+}
+
+#maincontent div.container table.htmltable td {
+	padding: 0;
+}
+
+#maincontent h1 {
+	margin: 0 0 1em 0;
+	padding: .4em 1em .3em .8em;
+	background-color: #6a96c5;
+	color: #fff;
+	font-weight: normal;
+}
+
+#maincontent h2 {
+	margin: .5em 0 1em 1em;
+}
+
+#maincontent p {
+	margin: 0 1em 1em 1em;
+}
+
+#maincontent ul {
+	margin: 0 1em 1em 0;
+}
+
+#maincontent table {
+	margin-top: 1em;
+}
+
+div.small {
+	
+	font-size: 85%;
 }
 
 #footer { 
-  width: 100%;
+  margin-top: 4em;
+  padding: 1em;
+  font-size: 73%;
+  background-color: #eee;
+  color: #999;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   text-align: center;
-  font-size: .7em;
-  border-top: 1px solid #2c65af;
 }
 
 #initialConfig { 
-  clear: both;
-  width: 100%;
-  font-size: 1.2em;
-  background-color: green;
-  color: black;
-  padding-top: .5em;
-  padding-bottom: .5em;
-  text-align: center;
+	clear: both;
+	font-size: 116%;
+	border-bottom: 1px solid #2C65AF;
+	padding: .5em 1em 1em 1em;
+	background-color: #5893d2;
+	color: #fff;
+}
+
+#initialConfig p {
+	margin-top: .5em; 
+}
+
+#searchform ul {
+	margin: 0;
+	padding: 0;
 }

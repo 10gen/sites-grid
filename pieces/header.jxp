@@ -55,31 +55,28 @@ catch ( e ){
 <html>
   <head>
 <link type="text/css" rel="stylesheet" href="/assets/style.css" />
-    <style>
-      .header ul { display: inline; }
-      .header li { display: inline; }
-    </style>
   </head>
   
   <body>
 
-    <div id="tab_controller" style="background-color: #6eaf6c; width:100%; ">
+  <div>
+    <div id="tab_controller">
       <ul>
 
-	<li style="margin-top: 0; "><a href="/" style="border:none;padding:0"><img src="/assets/10gen_logo_xs.gif"></a></li>
-	<li style="margin-left: .5em; margin-right: 4em; margin-top: 11px; font-size: 17px; color:#1c3b83;  ">Operator Site for <b><%= externalDomain %></b></li>
-        
+	<li class="logo"><a href="/" style="border:none;padding:0"><img src="/assets/10gen_logo_xs.gif"></a></li>
+	<li class="opsite">Operator Site for <b><%= externalDomain %></b></li>
         <forarray x sections >
           <li class="tab <%= x.css || "" %>" style="<%= x.style || "" %>"><a href="/<%= x.link %>"><%= x.name %></a></li>
         </forarray>
 
     </div>
-
-    <div ? initialConfig id="initialConfig">
-      <p>You are in the middle of your 10gen cloud initial setup</p>
-      <p>This will guide you through what you need to do.  Look at whats on top.  You will need to setup <b>nodes</b>, a <b>databaser server</b>, and an <b>application server pool</b>.</p>
-
-
-    </div>
+    <div class="bordertop"></div>  
+  </div> 
+   
+  <div ? initialConfig id="initialConfig">
+      <p>You are in the middle of your 10gen cloud initial setup. </p>
+      <p>This will guide you through what you need to do.  Look at what is on top.  You will need to setup <b>nodes</b>, a <b>databaser server</b>, and an <b>application server pool</b>.</p>
+  </div>
 
     <div id="maincontent">
+   

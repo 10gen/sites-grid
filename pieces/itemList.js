@@ -51,7 +51,7 @@ if ( request.action == "delete" && request._id ){
     }
 }
 
-print( "<h2>" + longName + "s</h2>" );
+print( "<h1>" + longName + "s</h1><div class=\"container\">" );
 
 var tab = new htmltable( 
     {
@@ -64,6 +64,5 @@ var tab = new htmltable(
 );
 tab.dbview( tab.find().sort( idxObject ) );
 
-
-print( "<br>" );
 print( "<a href='" + shortName + "_edit'>Add <b>" + longName + "</b></a>" );
+print( "</div>" );

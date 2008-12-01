@@ -1,11 +1,11 @@
   
-     <div id="footer">
-       Logged In As : <b><%= ( user || {} ).email %></b><br>
-       Internal 10gen grid management<br>
-       Current Time : <%= ( new Date() ).format( "yyyy-MM-dd hh:mm:ss Z" ) %>
-     </div>
-  
    </div> <!-- closes main content -->
+
+   <div id="footer">
+     Logged In As : <b><%= ( user || {} ).email %></b><br>
+     Internal 10gen grid management<br>
+     Current Time : <%= ( new Date() ).format( "yyyy-MM-dd hh:mm:ss Z" ) %>
+   </div>
 
   </body>
 </html>

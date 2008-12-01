@@ -2,33 +2,46 @@
 
 <h1>10gen grid management</h1>
 
-<h2>Overview</h2>
+<div class="container">
+  
+  <h3>Load Balancers</h3>
+  <% var lbs = db.lbs.find().toArray(); %>
+  <% if(lbs && lbs.length) { %>
+    <ul>
+      <forarray thing db.lbs.find().toArray() >
+        <li><%= thing.machine %></li>
+      </forarray>
+    </ul>
+  <% } else { %>
+    <p>None configured.</p>
+  <% } %>
 
-<h3>Load Balancers</h3>
-<ul>
-  <forarray thing db.lbs.find().toArray() >
-    <li><%= thing.machine %></li>
-  </forarray>
-</ul>
+  <h3>Databases</h3>
+  <% var dbs = db.dbs.find().toArray(); %>
+  <% if(dbs && dbs.length) { %>
+    <ul>
+      <forarray thing db.dbs.find().toArray() >
+        <li><%= thing.name %> <%= thing.mode %> <%= thing.machine || "" %> <%= thing.pairs || "" %></li>
+      </forarray>
+    </ul>
+  <% } else { %>
+    <p>None configured.</p>
+  <% } %>
 
+  <h3>Application Server Pools</h3>
+  <% var pools = db.pools.find().toArray(); %>
+  <% if(pools && pools.length) { %>
+  <ul>
+    <forarray thing db.pools.find().toArray() >
+      <li><%= thing.name %> <%= thing.machines %></li>
+    </forarray>
+  </ul>
+  <% } else { %>
+    <p>None configured.</p>
+  <% } %>
 
-<h3>Databases</h3>
-<ul>
-  <forarray thing db.dbs.find().toArray() >
-    <li><%= thing.name %> <%= thing.mode %> <%= thing.machine || "" %> <%= thing.pairs || "" %></li>
-  </forarray>
-</ul>
+</div>
 
-<h3>Application Server Pools</h3>
-<ul>
-  <forarray thing db.pools.find().toArray() >
-    <li><%= thing.name %> <%= thing.machines %></li>
-  </forarray>
-</ul>
-
-
-
-<br>
 <% local.pieces.footer(); %>
 
 

@@ -1,6 +1,8 @@
 <% local.pieces.header(); %>
 
-<h3>DB Edit</h3>
+<h1>DB Edit</h1>
+
+<div class="container">
 
 <%
 
@@ -153,6 +155,8 @@ if ( mydb.pairs ){
      }
   }
 </script>
+
+</div>
 
 <% local.pieces.footer(); %>
 

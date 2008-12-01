@@ -29,7 +29,8 @@ if ( request.action == "delete" && request.machines ){
 
 %>
 
-<h2>Nodes</h2>
+<h1>Nodes</h1>
+<div class="container">
 <form  action="/nodes/" >
   <% local.pieces.nodePicker( "machines" , true , current ); %>
   <input type="submit" name="action" value="delete">
@@ -42,7 +43,7 @@ if ( request.action == "delete" && request.machines ){
   <textarea name="new_nodes" cols=60 rows=10 ></textarea>
   <input type="submit" name="action" value="add">
 </form>
-<small>space or line seperated</small>
-
+<div class="small">space or line seperated</div>
+</div>
 <% local.pieces.footer(); %>
 
