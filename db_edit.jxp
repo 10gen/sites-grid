@@ -33,6 +33,9 @@ if ( request.action == "save" ){
         if ( ! request.machine ){
             myerror( "need a machine" );
         }
+        else if ( request.getParameters( "slaves" ).contains( request.machine ) ) {
+            myerror( "the master cannot be a slave of itself" );
+        }
         delete mydb.pairs;
         delete mydb.right;
     }
@@ -128,7 +131,7 @@ if ( mydb.pairs ){
 
 <hr>
 
-<h4>Sitess Using this</h4>
+<h4>Sites Using this</h4>
 
 <ul ? mydb.name >
   <forarray other ( db.sites.find( { "dbs.server" : mydb.name } ) ).toArray() >
