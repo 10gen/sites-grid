@@ -163,4 +163,35 @@ routes = null;
 
 User.requirements = {};
 
+
 externalDomain = javaStatic( "ed.util.Config" , "getExternalDomain" );
+internalDomain = javaStatic( "ed.util.Config" , "getInternalDomain" );
+
+serverNamesToLinks = function( servers , port , url ){
+    if ( isString( servers ) )
+	servers = [ servers ];
+
+    var html = "";
+    for each ( var s in servers ){
+	var orig = s;
+
+	if ( s.indexOf( ":" ) > 0 ){
+	    port = s.substring( s.indexOf( ":" ) + 1 );
+	    s = s.substring( 0 , s.indexOf( ":" ) );
+	}
+	
+	if ( s.indexOf( "." ) < 0 )
+	    s += "." + internalDomain;
+	
+	if ( html.length )
+	    html += " , ";
+	html += makeLink( "http://" + s + ":" + port + "/" + ( url || "" ) , orig );
+    }
+    return html
+}
+
+makeLink = function( href , name ){
+    name = name || href;
+    return "<a href='" + href + "'>" + name + "</a>";
+}
+

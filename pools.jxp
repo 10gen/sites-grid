@@ -1,4 +1,4 @@
 <% local.pieces.header(); %>
-<% local.pieces.itemList( "pool" , "AppServer Pool" , "name" , [ "type" , "machines" ] ) %>
+<% local.pieces.itemList( "pool" , "AppServer Pool" , "name" , [ "type" ] , [ { name : "machines" , view : function(z){ return serverNamesToLinks( z , 8080 , "~stats" ); } } ] ) %>
 <% local.pieces.footer(); %>
 
