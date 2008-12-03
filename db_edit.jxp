@@ -30,6 +30,9 @@ if ( isString( mydb.slaves ) ){
 }
 
 if ( request.action == "save" ){
+
+    if ( ! request.slaves )
+	mydb.slaves = null;
     
     if ( ! request.name ){
         myerror( "need a db name" );

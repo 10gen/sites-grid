@@ -16,8 +16,6 @@ var foo = coll.findOne();
 if ( foo ){
     if ( foo.name )
         fields.add( "name" );
-    if ( foo.machine )
-        fields.add( "machine" );
 }
 
 if ( extraFields ){
