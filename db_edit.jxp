@@ -38,7 +38,7 @@ if ( request.action == "save" ){
         if ( ! request.machine ){
             myerror( "need a machine" );
         }
-        else if ( request.getParameters( "slaves" ).contains( request.machine ) ) {
+        else if ( ( request.getParameters( "slaves" ) || [] ).contains( request.machine ) ) {
             myerror( "the master cannot be a slave of itself" );
         }
         delete mydb.pairs;
