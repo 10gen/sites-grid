@@ -166,7 +166,7 @@ User.requirements = {};
 
 externalDomain = javaStatic( "ed.util.Config" , "getExternalDomain" );
 internalDomain = javaStatic( "ed.util.Config" , "getInternalDomain" );
-
+authCookie = javaStatic( "ed.util.Config" , "get" ).get( "authCookie" );
 serverNamesToLinks = function( servers , port , url ){
     if ( isString( servers ) )
 	servers = [ servers ];
@@ -185,7 +185,7 @@ serverNamesToLinks = function( servers , port , url ){
 	
 	if ( html.length )
 	    html += " , ";
-	html += makeLink( "http://" + s + ":" + port + "/" + ( url || "" ) , orig );
+	html += makeLink( "http://" + s + ":" + port + "/" + ( url || "" ) + "?auth=" + authCookie , orig );
     }
     return html
 }
