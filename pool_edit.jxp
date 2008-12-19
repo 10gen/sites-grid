@@ -64,6 +64,13 @@
 
 </form>
 
+<hr>
+<h4>Sites Using this</h4>
+<ul ? mypool.name >
+  <forarray other ( db.sites.find( { "environments.pool" : mypool.name } ) ).toArray() >
+    <li><a href="/site_edit?_id=<%= other._id %>"><%= other.name %></a></li>
+  </forarray> 
+</ul>
 
 <% local.pieces.changes( mypool ); %>
 

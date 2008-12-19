@@ -21,7 +21,7 @@ if ( request._id ) mydb = db.dbs.findOne( ObjectId( request._id ) );
 
 if ( ! mydb ) mydb = {};
 
-print( "<pre>\n" + tojson( mydb ) + "\n</pre>" );
+if ( request.debug ) print( "<pre>\n" + tojson( mydb ) + "\n</pre>" );
 
 Forms.fillInObject( "" , mydb );
 
