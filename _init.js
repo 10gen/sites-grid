@@ -18,13 +18,14 @@ User.getSiteName = function(){
 */
 function allowed( req , res , uri ){
     
-    if ( uri.startsWith( "/api" ) )
-	return;
-
     if ( req.getHeader( "X-SSL" ) != "js81" && req.getHost() == "grid.10gen.com" ){
 	response.sendRedirectPermanent( "https://" + req.getHost() + uri );
 	return;
     }
+
+    if ( uri.match( /^.api/ ) )
+	return;
+
     CDN = "";
     
     if ( uri.match( /\.(jpg|gif|js)$/ ) )
@@ -32,12 +33,11 @@ function allowed( req , res , uri ){
     
     user = Auth.getUser( req );
     
-    if ( ! req.getCookie( "__sudo" ) ){
+    if ( ! user && ! req.getCookie( "__sudo" ) ){
         response.addCookie( "__sudo" , "11" , 86400 * 365 ); 
         response.sendRedirectPermanent( "/" );
         return;
     }
-    
     
     if ( ! hasValidAdminConfig() ){
         // so there is a db, but nothing in it
@@ -50,6 +50,12 @@ function allowed( req , res , uri ){
         return null;
 
     return Auth.reject();
+}
+
+function mapUrlToJxpFile( uri ){
+    if ( uri.startsWith( "/api/" ) ){
+	return "/api.ssjs";
+    }
 }
 
 function hasValidAdminConfig(){
