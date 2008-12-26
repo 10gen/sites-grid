@@ -10,6 +10,6 @@ function makeDBCol( name ){
     };
 }	
 %>
-<% local.pieces.itemList( "db" , "Database Server" , "name" , [ "type" , "mode" ] , [ makeDBCol( "machine" ) , makeDBCol( "pairs" ) , makeDBCol( "slaves" ) ] ) %>
+    <% local.pieces.itemList( "db" , "Database Server" , "name" , [ "assignable" , "type" , "mode" ] , [ makeDBCol( "machine" ) , makeDBCol( "pairs" ) , makeDBCol( "slaves" ) ] ) %>
 <% local.pieces.footer(); %>
 

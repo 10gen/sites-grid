@@ -24,6 +24,9 @@
    }
    
    if ( request.action == "save" ){ 
+
+       mypool.assignable = request.assignable ? true : false;
+
        if ( request._id ) 
 	   (new ConfigChange( db.pools.findOne( ObjectId( request._id )) , mypool ) ).save();
        db.pools.save( mypool );
@@ -43,6 +46,11 @@
     <tr>
       <th>Name</th>
       <td><input name="name"></td>
+    </tr>
+
+    <tr>
+      <th>Assignable</th>
+      <td><input type="checkbox" name="assignable" value="true" <%= mypool.assignable ? "checked" : ""  %>></td>
     </tr>
 
     <tr>

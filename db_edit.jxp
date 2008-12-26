@@ -31,6 +31,8 @@ if ( isString( mydb.slaves ) ){
 
 if ( request.action == "save" ){
 
+    mydb.assignable = request.assignable ? true : false;
+
     if ( ! request.slaves )
 	mydb.slaves = null;
     
@@ -104,11 +106,17 @@ if ( mydb.pairs ){
       <th>Name</th>
       <td><input name="name"></td>
     </tr>
+
     <tr>
       <th>Type</th>
       <td>
         <%= envTypeSelect( "type" , mydb.type ) %>
       </td>
+    </tr>
+
+    <tr>
+      <th>Assignable</th>
+      <td><input type="checkbox" name="assignable" value="true" <%= mydb.assignable ? "checked" : ""  %>></td>
     </tr>
     
     <tr>
