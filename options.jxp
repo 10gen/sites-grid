@@ -45,7 +45,7 @@ if ( request.action == "save" ){
     db.options.save( current );
 }
 
-assert( db.options.find().length() == 1 );
+assert( db.options.find().length() <= 1 );
 
 
 %>
