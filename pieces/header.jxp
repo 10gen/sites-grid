@@ -28,6 +28,7 @@ if ( ! initialConfig || db.nodes.findOne() ){
 }
 
 sections.add( { link : "nodes" , name : "Nodes" } );
+sections.add( { link : "options" , name : "Options" } );
 
 if ( ! initialConfig ){
     sections.add( { link : "modules" , name : "Modules" , style : "margin-left: 2em;" } );

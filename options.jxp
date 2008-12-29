@@ -1,0 +1,74 @@
+<% local.pieces.header(); %>
+
+<%
+
+options = [
+
+    { name : "dbquota" , 
+      description : "Database quote support" ,
+      choices : [ false , true ]
+    } ,
+    
+    { name : "defaultGrid" , 
+      description : "auto-map grid site if doesn't exist" ,
+      choices : [ true , false ] 
+    }
+];
+
+function makeSelectBox( name , values , current ){
+    var html = "<select name='" + name + "'>";
+    
+    for each ( var v in values ){
+	html += "<option value='" + v + "' ";
+	if ( v == current )
+	    html += " selected ";
+	html += ">";
+	html += v;
+	html += "</option>";
+    }
+
+    html += "</select>";
+    return html;
+}
+
+var current = db.options.findOne() || {};
+
+if ( request.action == "save" ){
+    var o = Forms.fillInObject( "option_" , current );
+    for ( var k in o ){
+	if ( o[k] == "true" )
+	    o[k] = true;
+	else if ( o[k] == "false" )
+	    o[k] = false;
+    }
+
+    db.options.save( current );
+}
+
+assert( db.options.find().length() == 1 );
+
+
+%>
+
+<h2>Options</h2>
+
+<form>
+
+<table style='border-top: 1px solid; '>
+  <forarray o options >
+    <tr style='border-bottom: 1px solid; '>
+      <th><%= o.name %></th>
+      <td><%= makeSelectBox( "option_" + o.name , o.choices , current[ o.name ] ) %></td>
+      <td><%= o.description %></td>
+    </tr>
+  </forarray>
+</table>
+
+<input type="submit" name="action" value="save">
+
+</form>
+
+<% local.pieces.footer(); %>
+
+
+

@@ -4,6 +4,7 @@
 core.user.auth();
 core.util.diff();
 core.content.table();
+core.content.forms();
 
 /**
 * this is because we use the sudo hack below
