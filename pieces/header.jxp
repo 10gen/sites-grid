@@ -2,18 +2,22 @@
 
 var sections = [];
 
-if ( initialConfig && db.pools.findOne( { type : "PROD" } ) && db.dbs.findOne( { type : "PROD" } ) ){
-    // have the pieces i need setup
-    if ( db.users.findOne() ){
-        var s = new Cloud.Site( "admin" );
-        s.upsertDB( "prod" );
-        s.upsertEnvironment( "www" , "master" , "prod" );
-        s.gitroot = "git://github.com/10gen/sites-admin";
-        db.sites.save( s );
-        initialConfig = false;
-    }
-    else if ( ! request.getURI().startsWith( "/initialUser" ) ){
-        return response.sendRedirectTemporary( "/initialUser" );
+if ( initialConfig ) {
+    var poolInit = db.pools.findOne( { type : "PROD", assignable : true } );
+    var dbInit = db.dbs.findOne( { type : "PROD", assignable : true } );
+    if( poolInit && dbInit ) {
+        // have the pieces i need setup
+        if ( db.users.findOne() ){
+            var s = new Cloud.Site( "admin" );
+            s.upsertDB( "prod" );
+            s.upsertEnvironment( "www" , "master" , "prod" );
+            s.gitroot = "git://github.com/10gen/sites-admin";
+            db.sites.save( s );
+            initialConfig = false;
+        }
+        else if ( ! request.getURI().startsWith( "/initialUser" ) ){
+            return response.sendRedirectTemporary( "/initialUser" );
+        }
     }
 }
 
@@ -77,7 +81,8 @@ catch ( e ){
   <div ? initialConfig id="initialConfig">
       <p>You are in the middle of your 10gen cloud initial setup. </p>
       <p>This will guide you through what you need to do.  Look at what is on top.  You will need to setup <b>nodes</b>, a <b>databaser server</b>, and an <b>application server pool</b>.</p>
+      <span ? !poolInit>You need an assignable PROD pool.</span>
+      <span ? !dbInit>You need an assignable PROD database server.</span>
   </div>
 
     <div id="maincontent">
-   
